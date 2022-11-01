@@ -6,7 +6,7 @@
 5. Get rewarded
 
 # Env
-
+Add your alchemy API key to the `.env` file for the app to work
 
 # Getting Started with Create React App
 
