@@ -29,8 +29,7 @@ export function CreatePool({ type }) {
    * Redux
    */
   const dispatch = useDispatch()
-  const selectedNFTs = useSelector((state) => state.selectedNFTs)
-
+  const selectedNFTs = useSelector((state) => state.selectNFT)
   /**
    * User states 
    */
