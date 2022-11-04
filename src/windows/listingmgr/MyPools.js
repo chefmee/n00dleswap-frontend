@@ -11,6 +11,7 @@ import LSSVMFactory from '../../abis/LSSVMFactory.json'
 import LSSVMSwap from '../../abis/LSSVMSwap.json'
 import { hexZeroPad } from "ethers/lib/utils";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
+import { setSelectedRow } from "../../reducers/user";
 
 
 const factoryAddress = {
@@ -279,7 +280,7 @@ export function MyListings() {
   })
 
   return <WindowContent>
-    {selectedRow?.collection ? <Button onClick={() => setSelectedRow({})}>Re-select</Button> : <></>}
+    {selectedRow?.collection ? <Button onClick={() => dispatch(setSelectedRow({}))}>Re-select</Button> : <></>}
     <Table>
       <TableHead>
         <TableRow head>
@@ -292,7 +293,7 @@ export function MyListings() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {(selectedRow?.collection ? [selectedRow] : filledPools).map(sn => <TableRow onClick={() => setSelectedRow(sn)}>
+        {(selectedRow?.collection ? [selectedRow] : filledPools).map(sn => <TableRow onClick={() => dispatch(setSelectedRow(sn))}>
           <TableDataCell style={{ textAlign: 'center' }}>
             {sn.name || 'Loading Name...'} ({sn.collection?.address})
           </TableDataCell>
