@@ -30,10 +30,7 @@ export function CreateOffer({ type }) {
    * User states
    */
   // TODO: Move to Redux
-  const [startPrice, setStartPrice] = React.useState(0)
-  const [priceIncrement, setPriceIncrement] = React.useState(0)
-  const [keyword, setKeyword] = React.useState('')
-  const [stakeAmount, setStakeAmount] = useState(0)
+  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector((state) => state.user)
   
   /**
    * Auto states

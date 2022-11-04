@@ -28,15 +28,13 @@ export function CreatePool({ type }) {
    * Redux
    */
   const dispatch = useDispatch()
-  const selectedNFTs = useSelector((state) => state.selectNFT)
+  const selectedNFTs = useSelector((state) => state.selectedNFTs)
 
   /**
    * User states 
    */
   // TODO: Move to Redux
-  const [isSudoMirror, setIsSudoMirror] = React.useState(false)
-  const [startPrice, setStartPrice] = React.useState(0)
-  const [priceIncrement, setPriceIncrement] = React.useState(0)
+  const { isSudoMirror, startPrice, priceIncrement } = useSelector((state) => state.user)
   
   /**
    * Wagmi Calls

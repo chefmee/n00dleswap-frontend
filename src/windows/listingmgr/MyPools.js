@@ -41,7 +41,7 @@ export function MyListings() {
    * User states 
    */
   // TODO: Move to Redux
-  const [selectedRow, setSelectedRow] = React.useState({})
+  const selectedRow = useSelector((state) => state.selectedRow);
 
   /**
    * One time user states

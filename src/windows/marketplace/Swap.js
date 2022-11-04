@@ -51,9 +51,7 @@ export function Swap() {
    * User states
    */
   // TODO: Move to Redux
-  const [keyword, setKeyword] = React.useState('')
-  const [isPurchase, setIsPurchase] = React.useState(true)
-  const [amount, setAmount] = React.useState(0)
+  const { keyword, isPurchase, amount } = useSelector((state) => state.user)
   
   /**
    * Auto states
