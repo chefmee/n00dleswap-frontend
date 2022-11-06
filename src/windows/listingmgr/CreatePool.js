@@ -34,7 +34,7 @@ export function CreatePool({ type }) {
    * User states 
    */
   // TODO: Move to Redux
-  const { isSudoMirror, startPrice, priceIncrement } = useSelector((state) => state.user)
+  const { isSudoMirror, startPrice, priceIncrement } = useSelector((state) => state.pool)
   
   /**
    * Wagmi Calls

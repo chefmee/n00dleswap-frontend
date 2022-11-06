@@ -42,7 +42,7 @@ export function MyListings() {
    * User states 
    */
   // TODO: Move to Redux
-  const selectedRow = useSelector((state) => state.user.selectedRow);
+  const selectedRow = useSelector((state) => state.pool.selectedRow);
 
   /**
    * One time user states

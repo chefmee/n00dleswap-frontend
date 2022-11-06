@@ -53,7 +53,7 @@ export function Swap() {
    * User states
    */
   // TODO: Move to Redux
-  const { keyword, isPurchase, amount } = useSelector((state) => state.user)
+  const { keyword, isPurchase, amount } = useSelector((state) => state.swap)
   
   /**
    * Auto states

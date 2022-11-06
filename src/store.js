@@ -4,7 +4,9 @@ import selectNFTReducer from './reducers/selectNFT'
 import selectNFTSwapReducer from './reducers/selectNFTSwap'
 import openWindowReducer from './reducers/openWindow'
 import imageViewerReducer from './reducers/imageViewer'
-import userReducer from './reducers/user'
+import swapReducer from './reducers/swap'
+import offerReducer from './reducers/offer'
+import poolReducer from './reducers/pool'
 
 export default configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export default configureStore({
     selectNFTSwap: selectNFTSwapReducer,
     openWindow: openWindowReducer,
     imageViewer: imageViewerReducer,
-    user: userReducer,
+    swap: swapReducer,
+    offer: offerReducer,
+    pool: poolReducer,
   },
 })

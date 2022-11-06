@@ -32,7 +32,7 @@ export function CreateOffer({ type }) {
    * User states
    */
   // TODO: Move to Redux
-  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector((state) => state.user)
+  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector((state) => state.offer)
   const dispatch = useDispatch()
 
   /**
