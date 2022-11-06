@@ -14,7 +14,7 @@ import LSSVMRouterBuy from '../../abis/LSSVMRouterBuy.json'
 import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { useDispatch, useSelector } from "react-redux";
 import { select, unselectAll } from "../../reducers/selectNFTSwap";
-import { setKeyword, setAmount, setIsPurchase } from "../../reducers/user";
+import { setKeyword, setAmount, setIsPurchase } from "../../reducers/swap";
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 

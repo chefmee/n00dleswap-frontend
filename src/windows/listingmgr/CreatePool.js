@@ -9,7 +9,7 @@ import { useApproveNFT } from "../../interactors/useApproveNFT";
 import LSSVMFactory from '../../abis/LSSVMFactory.json'
 import { view } from "../../reducers/imageViewer";
 import { open } from "../../reducers/openWindow";
-import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/user";
+import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/pool";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'

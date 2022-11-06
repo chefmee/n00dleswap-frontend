@@ -11,7 +11,7 @@ import LSSVMFactory from '../../abis/LSSVMFactory.json'
 import LSSVMSwap from '../../abis/LSSVMSwap.json'
 import { hexZeroPad } from "ethers/lib/utils";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
-import { setSelectedRow } from "../../reducers/user";
+import { setSelectedRow } from "../../reducers/pool";
 
 
 const factoryAddress = {
