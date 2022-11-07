@@ -14,6 +14,8 @@ import LSSVMRouterBuy from '../../abis/LSSVMRouterBuy.json'
 import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { useDispatch, useSelector } from "react-redux";
 import { select, unselectAll } from "../../reducers/selectNFTSwap";
+import { setKeyword, setAmount, setIsPurchase } from "../../reducers/swap";
+
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const factoryAddress = {
@@ -51,9 +53,7 @@ export function Swap() {
    * User states
    */
   // TODO: Move to Redux
-  const [keyword, setKeyword] = React.useState('')
-  const [isPurchase, setIsPurchase] = React.useState(true)
-  const [amount, setAmount] = React.useState(0)
+  const { keyword, isPurchase, amount } = useSelector((state) => state.swap)
   
   /**
    * Auto states
@@ -222,21 +222,21 @@ export function Swap() {
     <Fieldset label='I am'>
       <Radio
         checked={isPurchase}
-        onClick={(e) => setIsPurchase(true)}
+        onClick={(e) => dispatch(setIsPurchase(true))}
         value={true}
         label='buying'
         name='buyorsell' />
       <Radio
         checked={!isPurchase}
-        onClick={(e) => setIsPurchase(false)}
+        onClick={(e) => dispatch(setIsPurchase(false))}
         value={false}
         label='selling'
         name='buyorsell' />
     </Fieldset>
-    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT Address" onChange={e => setKeyword(e.target.value)}></TextField></> :
+    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT Address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
       <Button onClick={() => {
         setNfts([])
-        setKeyword('')
+        dispatch(setKeyword(''))
       }}>Select again</Button>}
     {web3.utils.isAddress(keyword) ? <></> :
       <Table>
@@ -261,7 +261,7 @@ export function Swap() {
       </Table>
     }
 
-    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => setAmount(e.target.value)} type='number'></TextField> : selectedNFTs.length}</p>
+    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectedNFTs.length}</p>
     <p>You {isPurchase ? 'pay' : 'get'}: {new BigNumber(total)?.dividedBy('1000000000000000000').toString()} ETH</p>
     {
       amount > 0 && isPurchase ? <>

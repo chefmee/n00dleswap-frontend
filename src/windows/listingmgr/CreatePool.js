@@ -9,6 +9,7 @@ import { useApproveNFT } from "../../interactors/useApproveNFT";
 import LSSVMFactory from '../../abis/LSSVMFactory.json'
 import { view } from "../../reducers/imageViewer";
 import { open } from "../../reducers/openWindow";
+import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/pool";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
@@ -29,14 +30,11 @@ export function CreatePool({ type }) {
    */
   const dispatch = useDispatch()
   const selectedNFTs = useSelector((state) => state.selectNFT)
-
   /**
    * User states 
    */
   // TODO: Move to Redux
-  const [isSudoMirror, setIsSudoMirror] = React.useState(false)
-  const [startPrice, setStartPrice] = React.useState(0)
-  const [priceIncrement, setPriceIncrement] = React.useState(0)
+  const { isSudoMirror, startPrice, priceIncrement } = useSelector((state) => state.pool)
   
   /**
    * Wagmi Calls
@@ -109,7 +107,7 @@ export function CreatePool({ type }) {
       <Tooltip text='‍Allows you to list in Opensea, X2Y2, etc. at the same time' enterDelay={59} leaveDelay={500}>
         <Radio
           checked={!isSudoMirror}
-          onClick={(e) => setIsSudoMirror(false)}
+          onClick={(e) => dispatch(setIsSudoMirror(false))}
           value={true}
           label='Unlocked'
           name='lmode' />
@@ -118,14 +116,14 @@ export function CreatePool({ type }) {
       <Tooltip text='‍Dual listing in sudoswap. sudoswap will lockup your NFT.' enterDelay={59} leaveDelay={500}>
         <Radio
           checked={isSudoMirror}
-          onClick={(e) => setIsSudoMirror(true)}
+          onClick={(e) => dispatch(setIsSudoMirror(true))}
           value={false}
           label='Sudo-dual'
           name='lmode' />
       </Tooltip>
     </Fieldset>
-    <p>Start Price (ETH): <TextField onChange={e => setStartPrice(e.target.value)} type='number'></TextField></p>
-    <p>Price Increment (ETH): <TextField onChange={e => setPriceIncrement(e.target.value)} type='number'></TextField></p>
+    <p>Start Price (ETH): <TextField onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></TextField></p>
+    <p>Price Increment (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></p>
     <p>The first NFT being sold in this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) + Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
     <Button disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</Button><br></br>

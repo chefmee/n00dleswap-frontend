@@ -11,6 +11,8 @@ import Web3 from "web3";
 import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { useState } from "react";
+import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
+
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
 }
@@ -30,11 +32,9 @@ export function CreateOffer({ type }) {
    * User states
    */
   // TODO: Move to Redux
-  const [startPrice, setStartPrice] = React.useState(0)
-  const [priceIncrement, setPriceIncrement] = React.useState(0)
-  const [keyword, setKeyword] = React.useState('')
-  const [stakeAmount, setStakeAmount] = useState(0)
-  
+  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector((state) => state.offer)
+  const dispatch = useDispatch()
+
   /**
    * Auto states
    */
@@ -85,10 +85,10 @@ export function CreateOffer({ type }) {
   }, [keyword])
 
   return <WindowContent>
-    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT contract address" onChange={e => setKeyword(e.target.value)}></TextField></> :
+    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
       <Button onClick={() => {
         setNfts([])
-        setKeyword('')
+        dispatch(setKeyword(''))
       }}>Select again</Button>}
 
     {nftCollectionAddress == keyword ? <></> :
@@ -112,9 +112,9 @@ export function CreateOffer({ type }) {
           </TableRow>)}
         </TableBody>
       </Table>}
-    <p>Start Price (ETH): <TextField onChange={e => setStartPrice(e.target.value)} type='number'></TextField></p>
-    <p>Price Decrement (ETH): <TextField onChange={e => setPriceIncrement(e.target.value)} type='number'></TextField></p>
-    <p>Amount to stake (ETH): <TextField onChange={e => setStakeAmount(e.target.value)} type='number'></TextField></p>
+    <p>Start Price (ETH): <TextField onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></TextField></p>
+    <p>Price Decrement (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></p>
+    <p>Amount to stake (ETH): <TextField onChange={e => dispatch(setStakeAmount(e.target.value))} type='number'></TextField></p>
     <p>The first NFT being sold to this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) - Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
     <Button disabled={new BigNumber(
