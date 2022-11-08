@@ -153,7 +153,7 @@ export default function Default() {
                     </span>
                     {address ? 'Connected' : 'Connect Wallet'}
                   </ListItem>
-                  <Divider></Divider>
+                  {/* <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
                     <span role='img' aria-label='👨‍🍳' >
                       👨‍🍳
@@ -165,7 +165,7 @@ export default function Default() {
                       🍴
                     </span>
                     Dining Table (Staking)
-                  </ListItem>
+                  </ListItem> */}
                   <Divider />
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'nftselector' })}>
                     <span role='img' aria-label='🤑' >
