@@ -111,6 +111,8 @@ export default function Default() {
     connector: new InjectedConnector(),
   });
   const [windowPositions, setWindowPositions] = React.useState({});
+  const [windowSizes, setWindowSizes] = React.useState({});
+  console.log(windowPositions)
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
@@ -121,7 +123,14 @@ export default function Default() {
               <Rnd
                 key={window + i}
                 onDragStop={(e, data) => {
-                  setWindowPositions({ [window]: data });
+                  setWindowPositions(pos => {
+                    return {  ...pos, [window]: data }
+                  });
+                }}
+                onResizeStop={(e, data) => {
+                  setWindowSizes(sizes => {
+                    return {  ...sizes, [window]: data }
+                  });
                 }}
                 onMouseDown={
                   () => {
@@ -134,6 +143,7 @@ export default function Default() {
                   width: 400,
                 }}
                 position={windowPositions[window]}
+                size={windowSizes[window]}
                 minWidth={300}
                 dragHandleClassName="window-header"
                 enableResizing={{
