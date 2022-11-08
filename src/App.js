@@ -15,10 +15,10 @@ import {
 // pick a theme of your choice
 import original from 'react95/dist/themes/original';
 // original Windows95 font (optionally)
-import { useAccount, useConnect, useEnsName, useNetwork } from 'wagmi'
+import { useAccount, useConnect, useEnsName, useNetwork } from 'wagmi';
 import { createAlchemyWeb3 } from '@alch/alchemy-web3';
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import ERC721 from './abis/ERC721.json'
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import ERC721 from './abis/ERC721.json';
 import { Wrapper, GlobalStyles } from './Styles';
 
 import logoIMG from './assets/noodlogo.png';
@@ -34,21 +34,26 @@ import { CreateOffer } from './windows/offermgr/CreateOffer';
 import { Swap } from './windows/marketplace/Swap';
 import { MyListings } from './windows/listingmgr/MyPools';
 import { XSushiStaking } from './windows/staking/xSushiStaking';
+import { Rnd } from 'react-rnd';
+import {
+  useWindowSize,
+} from '@react-hook/window-size';
+
 
 export default function Default() {
-  
+
   const [open, setOpen] = React.useState(false);
   const [welcomeWindow, setWelcomeWindow] = React.useState(true);
   const [iexploreWindow, setIexploreWindow] = React.useState(false);
   const [initialized, setInitialized] = React.useState(false);
 
-  const [iframesrc, _setIframesrc] = React.useState("")
+  const [iframesrc, _setIframesrc] = React.useState("");
 
 
-  const [isEligible, setIsEligible] = React.useState(false || process.env.NODE_ENV==='development')
-  const windowStack = useSelector((state) => state.openWindow)
-  const dispatch = useDispatch()
-  const setWindowStack = (a) => dispatch(openWindow(a))
+  const [isEligible, setIsEligible] = React.useState(false || process.env.NODE_ENV === 'development');
+  const windowStack = useSelector((state) => state.openWindow);
+  const dispatch = useDispatch();
+  const setWindowStack = (a) => dispatch(openWindow(a));
   const windows = {
     n00d: <InfoWindow key={'n00d'} isEligible={isEligible} setIframesrc={setIframesrc} setWindowStack={setWindowStack}></InfoWindow>,
     iexplore: <IexploreWindow iframesrc={iframesrc}></IexploreWindow>,
@@ -60,67 +65,114 @@ export default function Default() {
     createoffer: <CreateOffer></CreateOffer>,
     sweep: <Swap></Swap>,
     mypools: <MyListings></MyListings>,
-  }
-  const spawnStraySheep = () => {
-    const esheep = new window.eSheep()
-    esheep.Start()
-  }
-  React.useEffect(() => {
+  };
+  const [width, height] = useWindowSize();
 
+  const spawnStraySheep = () => {
+    const esheep = new window.eSheep();
+    esheep.Start();
+  };
+  React.useEffect(() => {
     if (window.eSheep) {
       if (!initialized) {
-        const esheep = new window.eSheep()
-        esheep.Start()
-        setWindowStack({ action: 'push', window: 'n00d' })
-        setInitialized(true)
+        const esheep = new window.eSheep();
+        esheep.Start();
+        setWindowStack({ action: 'push', window: 'n00d' });
+        setInitialized(true);
       }
     }
-  })
+  }, [window.eSheep]);
+
+  React.useEffect(() => {
+    if (Object.entries(windowPositions).length > 0) {
+      Object.entries(windowPositions).forEach(([key, value]) => {
+        if (value) {
+          if (width < value.x) {
+            setWindowPositions({ [key]: { ...value, x: width - 200 } });
+          }
+
+          if (height < value.y) {
+            setWindowPositions({ [key]: { ...value, y: height - 200 } });
+          }
+        }
+      });
+    }
+  }, [width, height]);
+
   function setIframesrc(x) {
-    if (windowStack.indexOf('iexplore') === -1) setWindowStack({ action: 'push', window: 'iexplore' })
-    _setIframesrc(x)
+    if (windowStack.indexOf('iexplore') === -1) setWindowStack({ action: 'push', window: 'iexplore' });
+    _setIframesrc(x);
   }
-  const { chain } = useNetwork()
-  if (chain?.id && chain?.id != 1 && chain?.id != 5) alert(`Network ${chain?.id} not supported`)
-  const { address, isConnected } = useAccount()
-  const { data: ensName } = useEnsName({ address })
+  const { chain } = useNetwork();
+  if (chain?.id && chain?.id != 1 && chain?.id != 5) alert(`Network ${chain?.id} not supported`);
+  const { address, isConnected } = useAccount();
+  const { data: ensName } = useEnsName({ address });
   const { connect } = useConnect({
     connector: new InjectedConnector(),
-  })
-  const [windowPositions, setWindowPositions] = React.useReducer((res, action) => {
-    res[action.window] = action.data
-    return res
-  }, {})
-  
+  });
+  const [windowPositions, setWindowPositions] = React.useState({});
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
-      <ThemeProvider theme={original} >
+      <ThemeProvider theme={original}>
         {
-          windowStack.map((window, i) => <Draggable
-            onStop={(e, data) => {
-              setWindowPositions({ window, data })
-            }}
-            defaultPosition={windowPositions[window]}
-            onMouseDown={
-              () => {
-                setWindowStack({ action: 'focus', window })
-                setIexploreWindow(!iexploreWindow)
-              }} key={window + i} handle=".window-header" ><Window
-                style={{ position: 'absolute' }}
-                className='window'>
-              <WindowHeader active={i === windowStack.length - 1} className='window-header'>
-                <span>{window}.exe</span>
-                <Button onClick={(event) => {
-                  setWindowStack({ action: 'del', window })
-                  setWelcomeWindow(!welcomeWindow)
-                  event.stopPropagation()
-                }}>
-                  <span className='close-icon' />
-                </Button>
-              </WindowHeader>{windows[window]}
-            </Window>
-          </Draggable>)
+          windowStack.map((window, i) => {
+            return (
+              <Rnd
+                key={window + i}
+                onDragStop={(e, data) => {
+                  setWindowPositions({ [window]: data });
+                }}
+                onMouseDown={
+                  () => {
+                    setWindowStack({ action: 'focus', window: window });
+                    setIexploreWindow(!iexploreWindow);
+                  }}
+                default={{
+                  x: (width / 2 - 200) + (i * 40),
+                  y: 50 + (i * 40),
+                  width: 400,
+                }}
+                position={windowPositions[window]}
+                minWidth={300}
+                dragHandleClassName="window-header"
+                enableResizing={{
+                  bottom: true,
+                  bottomLeft: false,
+                  bottomRight: true,
+                  left: false,
+                  right: true,
+                  top: false,
+                  topLeft: false,
+                  topRight: false
+                }}
+                maxWidth={'100vw'}
+              >
+                <Window style={{ width: '100%', height: '100%' }} className="window">
+
+                  <WindowHeader active={i === windowStack.length - 1} className='window-header'>
+                    <span>{window}.exe</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '0.25rem' }}>
+                      {/* <Button onClick={(event) => {
+                        setWindowStack({ action: 'max', window: win });
+                      }}>
+                      </Button> */}
+                      <Button onClick={(event) => {
+                        setWindowStack({ action: 'del', window: window });
+                        setWelcomeWindow(!welcomeWindow);
+                        event.stopPropagation();
+                      }}>
+                        <span className='close-icon' />
+                      </Button>
+                    </div>
+                  </WindowHeader><div style={{overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100% - 2.5em)'}}>{windows[window]}</div>
+                </Window>
+              </Rnd>
+            );
+          }
+
+
+          )
         }
 
         <AppBar>
@@ -195,8 +247,8 @@ export default function Default() {
                   <Divider />
 
                   <ListItem onClick={() => {
-                    setWindowStack({ action: 'push', window: 'n00d' })
-                    setWelcomeWindow(true)
+                    setWindowStack({ action: 'push', window: 'n00d' });
+                    setWelcomeWindow(true);
                   }}>
                     <span role='img' aria-label='👨‍💻'>
                       👨‍💻
@@ -204,7 +256,7 @@ export default function Default() {
                     Info
                   </ListItem>
                   <ListItem onClick={() => {
-                    spawnStraySheep()
+                    spawnStraySheep();
                   }}>
                     straysheep.exe
                   </ListItem>

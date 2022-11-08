@@ -6,6 +6,7 @@
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.6",
     "@andrewscwei/super-error": "^2.1.0",
+    "@react-hook/window-size": "^3.1.1",
     "@react-rxjs/core": "^0.9.8",
     "@react-rxjs/utils": "^0.9.5",
     "@react95/core": "^6.0.4",
@@ -26,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-redux": "^8.0.2",
+    "react-rnd": "^10.3.7",
     "react-scripts": "4.0.3",
     "react95": "^3.12.2",
     "rxjs": "^7.5.6",
