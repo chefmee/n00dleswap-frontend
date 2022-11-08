@@ -112,7 +112,7 @@ export default function Default() {
   });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
-  console.log(windowPositions)
+  console.log(windowSizes)
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
@@ -127,12 +127,13 @@ export default function Default() {
                     return {  ...pos, [window]: data }
                   });
                 }}
-                onResizeStop={(e, data) => {
+                onResizeStop={(e, data, ref) => {
                   setWindowSizes(sizes => {
-                    return {  ...sizes, [window]: data }
+                    return {  ...sizes, [window]: ref.style }
                   });
+                  //e.stopImmediatePropagation()
                 }}
-                onMouseDown={
+                onClick={
                   () => {
                     setWindowStack({ action: 'focus', window: window });
                     setIexploreWindow(!iexploreWindow);
@@ -140,7 +141,7 @@ export default function Default() {
                 default={{
                   x: (width / 2 - 200) + (i * 40),
                   y: 50 + (i * 40),
-                  width: 400,
+                  width: 1000,
                 }}
                 position={windowPositions[window]}
                 size={windowSizes[window]}
@@ -158,7 +159,7 @@ export default function Default() {
                 }}
                 maxWidth={'100vw'}
               >
-                <Window style={{ width: '100%', height: '100%' }} className="window">
+                <Window  style={{ width: '100%', height: '100%' }} className="window">
 
                   <WindowHeader active={i === windowStack.length - 1} className='window-header'>
                     <span>{window}.exe</span>
