@@ -112,6 +112,20 @@ export default function Default() {
   });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
+
+  React.useEffect(() => {
+    console.log('position', windowPositions)
+    window.localStorage.setItem('windowPositions', windowPositions)
+  }, [windowPositions]);
+
+  React.useEffect(() => {
+    console.log('size', windowSizes)
+    window.localStorage.setItem('windowSizes', windowSizes)
+    console.log("gettime", window.localStorage.getItem('windowSizes')) 
+    console.log("openedWindows", window.localStorage.getItem('openedWindows')) 
+    console.log("openedWindows", window.localStorage.getItem('openedWindows')) 
+  }, [windowSizes]);
+
   console.log(windowSizes)
   return (
     <Wrapper>
