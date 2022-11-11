@@ -20,6 +20,7 @@
     "alchemy-sdk": "^2.2.0",
     "axios": "^1.0.0",
     "bignumber.js": "^9.1.0",
+    "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.7.0",
     "lodash": "^4.17.21",
     "mongodb": "^4.11.0",

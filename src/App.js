@@ -38,7 +38,7 @@ import { Rnd } from 'react-rnd';
 import {
   useWindowSize,
 } from '@react-hook/window-size';
-
+import makeBlockie from 'ethereum-blockies-base64';
 
 export default function Default() {
 
@@ -214,6 +214,7 @@ export default function Default() {
                     <span role='img' aria-label='🔗'>
                       🔗
                     </span>
+                    <img src={makeBlockie(address)} style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft: '10px'}}/>
                     {address ? `Connected (${address})` : 'Connect Wallet'}
                   </ListItem>
                   {/* <Divider></Divider>
