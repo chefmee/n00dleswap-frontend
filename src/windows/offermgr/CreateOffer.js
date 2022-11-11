@@ -70,7 +70,7 @@ export function CreateOffer({ type }) {
   const dispatch = useDispatch();
 
   const onFieldChanged = (type, e) => {
-    let fieldFormErrors = formErrors;
+    const fieldFormErrors = formErrors;
     let fieldStartPriceValid = startPriceValid;
     let fieldPriceIncrementValid = priceIncrementValid;
     let fieldStakeAmountValid = stakeAmountValid;
@@ -79,11 +79,19 @@ export function CreateOffer({ type }) {
         dispatch(setStartPrice(e.target.value));
         fieldStartPriceValid = e.target.value > 0;
         fieldPriceIncrementValid = e.target.value - priceIncrement > 0;
+        fieldFormErrors.startPrice = fieldStartPriceValid
+          ? ""
+          : "Start Price should be whole number";
+        fieldFormErrors.priceIncrement = fieldPriceIncrementValid
+          ? ""
+          : "Price Decrement should be less than Start Price";
         break;
       case "priceIncrement":
         dispatch(setPriceIncrement(e.target.value));
-        fieldPriceIncrementValid =
-          startPrice - e.target.value > 0 && e.target.value > 0;
+        fieldPriceIncrementValid = startPrice - e.target.value > 0;
+        fieldFormErrors.priceIncrement = fieldPriceIncrementValid
+          ? ""
+          : "Price Decrement should be less than Start Price";
         break;
       case "stakeAmount":
         dispatch(setStakeAmount(e.target.value));
@@ -95,12 +103,6 @@ export function CreateOffer({ type }) {
       default:
         break;
     }
-    fieldFormErrors.startPrice = fieldStartPriceValid
-      ? ""
-      : "Start Price should be whole number";
-    fieldFormErrors.priceIncrement = fieldPriceIncrementValid
-      ? ""
-      : "Price Decrement should be less than Start Price";
     setStartPriceValid(fieldStartPriceValid);
     setPriceIncrementValid(fieldPriceIncrementValid);
     setStakeAmountValid(fieldStakeAmountValid);
