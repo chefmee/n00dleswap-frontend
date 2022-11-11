@@ -214,7 +214,7 @@ export default function Default() {
                     <span role='img' aria-label='🔗'>
                       🔗
                     </span>
-                    {address ? 'Connected' : 'Connect Wallet'}
+                    {address ? `Connected (${address})` : 'Connect Wallet'}
                   </ListItem>
                   {/* <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
