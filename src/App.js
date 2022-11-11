@@ -36,7 +36,7 @@ import { MyListings } from "./windows/listingmgr/MyPools";
 import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
-import { WalletOptionsModal } from "./components";
+import { WalletOptionsModal } from "./windows/WalletOptionsModal";
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -76,6 +76,7 @@ export default function Default() {
     createoffer: <CreateOffer></CreateOffer>,
     sweep: <Swap></Swap>,
     mypools: <MyListings></MyListings>,
+    walletSelector: <WalletOptionsModal></WalletOptionsModal>
   };
   const [width, height] = useWindowSize();
 
@@ -85,7 +86,7 @@ export default function Default() {
   };
 
   const onConnectButtonClicked = () => {
-    setShowWalletOptions(true);
+    setWindowStack({ action: "push", window: "walletSelector" })
   };
 
   React.useEffect(() => {
@@ -125,9 +126,6 @@ export default function Default() {
     alert(`Network ${chain?.id} not supported`);
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
   console.log(windowSizes);
@@ -335,7 +333,6 @@ export default function Default() {
           </Toolbar>
         </AppBar>
       </ThemeProvider>
-      {showWalletOptions && <WalletOptionsModal />}
     </Wrapper>
   );
 }
