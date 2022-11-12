@@ -12,8 +12,6 @@ import LSSVMSwap from '../../abis/LSSVMSwap.json'
 import { hexZeroPad } from "ethers/lib/utils";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { setSelectedRow } from "../../reducers/pool";
-import { setModalStatus } from "../../reducers/modal";
-import { ModalTypes } from "../../constants/modalTypes";
 import { usePrompt } from "../../hooks/usePrompt";
 
 const factoryAddress = {

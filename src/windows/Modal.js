@@ -1,9 +1,9 @@
 import React from "react";
 import { Rnd } from "react-rnd";
-import { Button, TextField, Window, WindowHeader } from "react95";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../reducers/modal";
 import { useWindowSize } from "@react-hook/window-size";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, TextField, Window, WindowHeader } from "react95";
+import { closeModal } from "../reducers/modal";
 import { ModalTypes } from "../constants/modalTypes";
 import { usePrompt } from "../hooks/usePrompt";
 
