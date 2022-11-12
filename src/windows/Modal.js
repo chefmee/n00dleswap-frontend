@@ -2,13 +2,14 @@ import React from "react";
 import { Rnd } from "react-rnd";
 import { Button, Window, WindowHeader } from "react95";
 import { useDispatch, useSelector } from "react-redux";
-import { setError } from "../reducers/errorDialog";
+import { closeModal } from "../reducers/Modal";
 import { useWindowSize } from "@react-hook/window-size";
+import { ModalTypes } from "../constants/modalTypes";
 
-export function ErrorModal() {
+export function Modal() {
     const [width, height] = useWindowSize();
     const dispatch = useDispatch();
-    const error = useSelector((state) => state.error);
+    const { message, type } = useSelector((state) => state.modal);
     return (
     <Rnd
       default={{
@@ -22,7 +23,7 @@ export function ErrorModal() {
     >
       <Window style={{ width: "100%", height: "100%" }} className="window">
         <WindowHeader active={true} className="window-header">
-          <span>Error</span>
+          <span>{type === ModalTypes.SUCCESS ? 'Success' : 'Error'}</span>
           <div
             style={{
               display: "flex",
@@ -32,7 +33,7 @@ export function ErrorModal() {
           >
             <Button
               onClick={(event) => {
-                dispatch(setError(""));
+                dispatch(closeModal());
               }}
             >
               <span className="close-icon" />
@@ -46,7 +47,7 @@ export function ErrorModal() {
             height: "calc(100% - 2.5em)",
           }}
         >
-          {error}
+          {message}
         </div>
       </Window>
     </Rnd>

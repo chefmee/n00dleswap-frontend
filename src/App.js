@@ -33,8 +33,9 @@ import { MyListings } from "./windows/listingmgr/MyPools";
 import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
-import { ErrorModal } from "./windows/ErrorModal";
-import { setError } from "./reducers/errorDialog";
+import { Modal } from "./windows/Modal";
+import { setModalStatus } from "./reducers/Modal";
+import { ModalTypes } from "./constants/modalTypes";
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -48,7 +49,7 @@ export default function Default() {
     false || process.env.NODE_ENV === "development"
   );
   const windowStack = useSelector((state) => state.openWindow);
-  const error = useSelector((state) => state.error);
+  const { message } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const setWindowStack = (a) => dispatch(openWindow(a));
   const windows = {
@@ -115,7 +116,10 @@ export default function Default() {
   }
   const { chain } = useNetwork();
   if (chain?.id && chain?.id != 1 && chain?.id != 5) {
-    dispatch(setError(`Network ${chain?.id} not supported`))
+    dispatch(setModalStatus({
+      type: ModalTypes.ERROR,
+      message: `Network ${chain?.id} not supported`
+    }))
   }
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
@@ -212,7 +216,7 @@ export default function Default() {
             </Rnd>
           );
         })}
-        {error.length > 0 && <ErrorModal />}
+        {message.length > 0 && <Modal />}
 
         <AppBar>
           <Toolbar style={{ justifyContent: "space-between" }}>
