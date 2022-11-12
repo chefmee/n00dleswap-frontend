@@ -49,7 +49,7 @@ export function Swap() {
    * Redux
    */
   const dispatch = useDispatch()
-  const selectedNFTs = useSelector((state) => state.selectNFTSwap)
+  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFTSwap)
 
   /**
    * User states
@@ -216,6 +216,16 @@ export function Swap() {
     }
     if (keyword !== '' && !web3.utils.isAddress(keyword)) get()
   }, [keyword])
+
+  React.useEffect(() => {
+    if (!isSameCollection) {
+      dispatch(setModalStatus({
+        type: ModalTypes.ERROR,
+        message: 'Can only select NFTs from the same collection'
+      }))
+    }
+  }, [isSameCollection])
+
   // Get user's NFTs
   React.useEffect(() => {
     async function get() {
