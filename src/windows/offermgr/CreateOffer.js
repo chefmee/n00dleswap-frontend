@@ -12,7 +12,8 @@ import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { useState } from "react";
 import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
-import { setModalStatus } from "../../reducers/Modal";
+import { setModalStatus } from "../../reducers/modal";
+import { usePrompt } from "../../hooks/usePrompt";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'

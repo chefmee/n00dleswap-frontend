@@ -34,7 +34,7 @@ import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
 import { Modal } from "./windows/Modal";
-import { setModalStatus } from "./reducers/Modal";
+import { setModalStatus } from "./reducers/modal";
 import { ModalTypes } from "./constants/modalTypes";
 
 export default function Default() {

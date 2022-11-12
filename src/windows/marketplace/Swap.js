@@ -15,6 +15,8 @@ import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { useDispatch, useSelector } from "react-redux";
 import { select, unselectAll } from "../../reducers/selectNFTSwap";
 import { setKeyword, setAmount, setIsPurchase } from "../../reducers/swap";
+import { setModalStatus } from "../../reducers/modal";
+import { ModalTypes } from "../../constants/modalTypes";
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
@@ -198,7 +200,12 @@ export function Swap() {
       setOffers(sortedOffers)
     }
     x()
-    if (isBuyNFTSuccess || isSellNFTSuccess) alert('Trade Success!')
+    if (isBuyNFTSuccess || isSellNFTSuccess) {
+      dispatch(setModalStatus({
+        type: ModalTypes.SUCCESS,
+        message: 'Trade Success!'
+      }))
+    }
   }, [address, chain, nfts, keyword, isPurchase, isBuyNFTSuccess, isSellNFTSuccess])
   // Get collections from gem.xyz by keyword
   React.useEffect(() => {

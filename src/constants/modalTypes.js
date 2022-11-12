@@ -1,4 +1,6 @@
 export const ModalTypes = {
     SUCCESS: 'success',
-    ERROR: 'error'
+    ERROR: 'error',
+    INFO: 'info',
+    INITIAL: 'initial',
 }

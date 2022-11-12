@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ModalTypes } from '../constants/modalTypes';
 
-const initialState = ''
 export const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     message: '',
-    type: ModalTypes.SUCCESS
+    type: ModalTypes.INITIAL,
   },
   reducers: {
     setModalStatus: (ref, raction) => {
@@ -15,11 +14,11 @@ export const modalSlice = createSlice({
       ref.type = action.type;
       return ref
     },
-    closeModal: (ref, raction) => {
+    closeModal: (ref) => {
       ref.message = '';
-      ref.type = ModalTypes.SUCCESS;
+      ref.type = ModalTypes.INITIAL;
       return ref
-    }
+    },
   },
 })
 
