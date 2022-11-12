@@ -112,7 +112,6 @@ export default function Default() {
   });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
-  console.log(windowSizes)
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
