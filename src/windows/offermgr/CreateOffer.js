@@ -77,7 +77,6 @@ export function CreateOffer({ type }) {
   React.useEffect(() => {
     if (isPrepareCreateError && !error.message.includes('user rejected transaction')) {
       dispatch(setError('Create pool error. Is the address you entered a NFT cotract address?'))
-      alert('Create pool error. Is the address you entered a NFT cotract address?')
     }
   }, [isPrepareCreateError])
   React.useEffect(() => {

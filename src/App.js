@@ -34,6 +34,7 @@ import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
 import { ErrorModal } from "./windows/ErrorModal";
+import { setError } from "./reducers/errorDialog";
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -114,15 +115,7 @@ export default function Default() {
   }
   const { chain } = useNetwork();
   if (chain?.id && chain?.id != 1 && chain?.id != 5) {
-    <Wrapper>
-      <GlobalStyles>
-        <ThemeProvider theme={original}>
-          <WindowHeader>Error</WindowHeader>
-          <WindowContent>Network {chain?.id} not supported</WindowContent>
-        </ThemeProvider>
-      </GlobalStyles>
-    </Wrapper>;
-    // alert(`Network ${chain?.id} not supported`)
+    dispatch(setError(`Network ${chain?.id} not supported`))
   }
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
