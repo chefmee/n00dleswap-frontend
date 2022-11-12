@@ -1,6 +1,4 @@
 import React from "react";
-import Draggable from "react-draggable";
-import BigNumber from "bignumber.js";
 import { ThemeProvider } from "styled-components";
 import {
   AppBar,
@@ -17,9 +15,7 @@ import {
 import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
 import { useAccount, useConnect, useEnsName, useNetwork } from "wagmi";
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import ERC721 from "./abis/ERC721.json";
 import { Wrapper, GlobalStyles } from "./Styles";
 
 import logoIMG from "./assets/noodlogo.png";
@@ -37,7 +33,7 @@ import { MyListings } from "./windows/listingmgr/MyPools";
 import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
-import { setError } from "./reducers/errorDialog";
+import { ErrorModal } from "./windows/ErrorModal";
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -223,52 +219,7 @@ export default function Default() {
             </Rnd>
           );
         })}
-        {error.length > 0 && (
-          <Rnd
-            default={{
-              x: width / 2,
-              y: height / 2,
-              width: 300,
-            }}
-            minWidth={300}
-            dragHandleClassName="window-header"
-            maxWidth={"100vw"}
-          >
-            <Window
-              style={{ width: "100%", height: "100%" }}
-              className="window"
-            >
-              <WindowHeader active={true} className="window-header">
-                <span>Error</span>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    gap: "0.25rem",
-                  }}
-                >
-                  <Button
-                    onClick={(event) => {
-                      dispatch(setError(""));
-                      event.stopPropagation();
-                    }}
-                  >
-                    <span className="close-icon" />
-                  </Button>
-                </div>
-              </WindowHeader>
-              <div
-                style={{
-                  overflowY: "scroll",
-                  overflowX: "hidden",
-                  height: "calc(100% - 2.5em)",
-                }}
-              >
-                {error}
-              </div>
-            </Window>
-          </Rnd>
-        )}
+        {error.length > 0 && <ErrorModal />}
 
         <AppBar>
           <Toolbar style={{ justifyContent: "space-between" }}>
