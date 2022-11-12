@@ -12,6 +12,7 @@ import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { useState } from "react";
 import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
+import { setError } from "../../reducers/errorDialog";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
@@ -74,7 +75,10 @@ export function CreateOffer({ type }) {
    * Effects
    */
   React.useEffect(() => {
-    if (isPrepareCreateError && !error.message.includes('user rejected transaction')) alert('Create pool error. Is the address you entered a NFT cotract address?')
+    if (isPrepareCreateError && !error.message.includes('user rejected transaction')) {
+      dispatch(setError('Create pool error. Is the address you entered a NFT cotract address?'))
+      alert('Create pool error. Is the address you entered a NFT cotract address?')
+    }
   }, [isPrepareCreateError])
   React.useEffect(() => {
     async function get() {

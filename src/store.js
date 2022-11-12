@@ -7,6 +7,7 @@ import imageViewerReducer from './reducers/imageViewer'
 import swapReducer from './reducers/swap'
 import offerReducer from './reducers/offer'
 import poolReducer from './reducers/pool'
+import errorReducer from './reducers/errorDialog'
 
 export default configureStore({
   reducer: {
@@ -17,5 +18,6 @@ export default configureStore({
     swap: swapReducer,
     offer: offerReducer,
     pool: poolReducer,
+    error: errorReducer,
   },
 })
