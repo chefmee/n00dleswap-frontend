@@ -13,6 +13,8 @@ import { hexZeroPad } from "ethers/lib/utils";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { setSelectedRow } from "../../reducers/pool";
 import { usePrompt } from "../../hooks/usePrompt";
+import { setModalStatus } from "../../reducers/modal";
+import { ModalTypes } from "../../constants/modalTypes";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'

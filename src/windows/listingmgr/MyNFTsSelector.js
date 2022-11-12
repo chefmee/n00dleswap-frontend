@@ -5,7 +5,7 @@ import { select, unselectAll } from "../../reducers/selectNFT";
 import { open as openWindow } from "../../reducers/openWindow";
 import { useAccount, useNetwork } from "wagmi";
 import axios from "axios";
-import { setModalStatus } from "../../reducers/Modal";
+import { setModalStatus } from "../../reducers/modal";
 import { ModalTypes } from "../../constants/modalTypes";
 export function MyNFTsSelector() {
   /**
