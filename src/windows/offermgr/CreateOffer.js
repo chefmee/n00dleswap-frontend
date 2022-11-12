@@ -91,10 +91,6 @@ export function CreateOffer({ type }) {
     if (keyword !== '') get()
   }, [keyword])
 
-  const handleTest = async () => {
-    dispatch(setStartPrice(3));
-  }
-
   return <WindowContent>
     {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
       <Button onClick={() => {
@@ -142,6 +138,5 @@ export function CreateOffer({ type }) {
       
       
     }} disabled={isCreateLoading || isCreateSuccess}>{isCreateLoading? 'Making Offer...': isCreateSuccess? 'Offer made': 'Make Offer'}</Button>
-    <Button onClick={handleTest}>test</Button>
   </WindowContent>
 }
