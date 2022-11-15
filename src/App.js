@@ -124,20 +124,20 @@ export default function Default() {
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
 
-  const handleDragStop = (data) => {
-    console.log("windowSizes", windowSizes);
-    console.log("asdffs", data);
+  const handleOnDragEnd = (result) => {
+    setWindowStack({ action: 'focus', window: result.draggableId });
+    setIexploreWindow(!iexploreWindow);
   };
 
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
       <ThemeProvider theme={original}>
-        <DragDropContext>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="characters">
             {(provided) => (
               <ul
-                className="characters"
+                className="characters" 
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -155,7 +155,7 @@ export default function Default() {
                             className="window"
                           >
                             <WindowHeader
-                              active={index === windowStack.length - 1}
+                              active={index === 0}
                               className="window-header"
                             >
                               <span>{window}.exe</span>
