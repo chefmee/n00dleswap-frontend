@@ -142,7 +142,7 @@ export default function Default() {
                   <div active={i === windowStack.length - 1} className='window-header'>
                     <span>{window}.exe</span>
                     <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '0.25rem' }}>
-                      <div onClick={(event) => {
+                      <div className='close-button' onClick={(event) => {
                         setWindowStack({ action: 'del', window: window });
                         setWelcomeWindow(!welcomeWindow);
                         event.stopPropagation();
@@ -170,51 +170,51 @@ export default function Default() {
           </div>
           {open && (
             <div className='menu' onClick={() => setOpen(false)}>
-              <div className='menu-item' disabled={address} onClick={connect}>
+              <div className={`menu-item ${!address ? '' : 'menu-item-disabled'}`} onClick={connect}>
                 <span role='img' aria-label='🔗'>
                   🔗
                 </span>
                 {address ? 'Connected' : 'Connect Wallet'}
               </div>
               {/* <Divider></Divider>
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
                 <span role='img' aria-label='👨‍🍳' >
                   👨‍🍳
                 </span>
                 &nbsp;Prepare Meal (Earn fees)
               </div>
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
                 <span role='img' aria-label='🍴' >
                   🍴
                 </span>
                 Dining Table (Staking)
               </div> */}
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'nftselector' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'nftselector' })}>
                 <span role='img' aria-label='🤑' >
                   🤑
                 </span>
                 List your NFT
               </div>
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'createoffer' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'createoffer' })}>
                 <span role='img' aria-label='💱' >
                   💱
                 </span>
                 Create offer for NFT
               </div>
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'mypools' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'mypools' })}>
                 <span role='img' aria-label='🏊' >
                   🏊
                 </span>
                 My Pools
               </div>
-              <div className='menu-item' disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'sweep' })}>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'sweep' })}>
                 <span role='img' aria-label='🔀'>
                   🔀
                 </span>
                 Sweep NFTs
               </div>
 
-              <div className='menu-item' onClick={() => {
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => {
                 setWindowStack({ action: 'push', window: 'n00d' });
                 setWelcomeWindow(true);
               }}>
@@ -223,7 +223,7 @@ export default function Default() {
                 </span>
                 Info
               </div>
-              <div className='menu-item' onClick={() => {
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => {
                 spawnStraySheep();
               }}>
                 straysheep.exe
