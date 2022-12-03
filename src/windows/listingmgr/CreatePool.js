@@ -1,4 +1,4 @@
-import { Anchor, Button, TextField, WindowContent, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell, Fieldset, Radio, Tooltip } from "react95";
+import { Anchor, Button, TextField, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell, Fieldset, Radio, Tooltip } from "react95";
 import { useSelector, useDispatch } from 'react-redux'
 import { ethers } from "ethers";
 import React from 'react'
@@ -74,7 +74,7 @@ export function CreatePool({ type }) {
     if (isSuccess) dispatch(unselectAll())
   }, [isSuccess])
   
-  return <WindowContent>
+  return <div className="window-content">
     <div>You are listing {selectedNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectedNFTs[0]?.split('|*|')[0]}>{selectedNFTs[0]?.split('|*|')[0]}</Anchor></div>
     <Table>
       <TableHead>
@@ -126,10 +126,10 @@ export function CreatePool({ type }) {
     <p>Price Increment (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></p>
     <p>The first NFT being sold in this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) + Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
-    <Button disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</Button><br></br>
+    <div className="button" disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</div><br></br>
     <p>Step 2:</p>
-    <Button disabled={isLoading || !NFTAllowance} onClick={() => {
+    <div className="button" disabled={isLoading || !NFTAllowance} onClick={() => {
       writeCreatePool?.()
-    }}>{isLoading ? 'Creating Pool...' : 'Create Pool'}</Button>
-  </WindowContent>
+    }}>{isLoading ? 'Creating Pool...' : 'Create Pool'}</div>
+  </div>
 }

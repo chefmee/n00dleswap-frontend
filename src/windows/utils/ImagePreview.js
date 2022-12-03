@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 export function ImagePreview() {
   const imageSrc = useSelector((state) => state.imageViewer)
   return (
-    <WindowContent>
+    <div className="window-content">
       <img src={imageSrc} style={{maxWidth:400}}></img>
-    </WindowContent>
+    </div>
   )
 }

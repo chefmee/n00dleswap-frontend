@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Panel, WindowContent, LoadingIndicator } from "react95";
+import { Panel, LoadingIndicator } from "react95";
 import { useSelector, useDispatch } from "react-redux";
 import { select, unselectAll } from "../../reducers/selectNFT";
 import { open as openWindow } from "../../reducers/openWindow";
@@ -47,7 +47,7 @@ export function MyNFTsSelector() {
   }, [address]);
   
   return (
-    <WindowContent>
+    <div className="window-content">
       {/* load bar started out as flase so make Loading... as default, then if nft length is 0, show no nft, if nft length is bigger than 0, show the nfts */}
       {loadBar ? (
         <>
@@ -79,20 +79,20 @@ export function MyNFTsSelector() {
             Select your NFTs to list them for sale &nbsp;{" "}
             {selectedNFTs?.length ? (
               <>
-                <Button
+                <div className="button"
                   onClick={() =>
                     setWindowStack({ action: "push", window: "createpool" })
                   }
                 >
                   List {selectedNFTs?.length} NFTs
-                </Button>
-                <Button
+                </div>
+                <div className="button"
                   onClick={() => {
                     dispatch(unselectAll());
                   }}
                 >
                   Unselect all
-                </Button>
+                </div>
               </>
             ) : (
               <></>
@@ -152,6 +152,6 @@ export function MyNFTsSelector() {
           </Panel>
         </>
       )}
-    </WindowContent>
+    </div>
   );
 }

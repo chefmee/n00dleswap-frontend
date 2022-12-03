@@ -151,7 +151,7 @@ export default function Default() {
                       </div>
                     </div>
                   </div>
-                  <div style={{overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100% - 2.5em)'}}>
+                  <div>
                     {windows[window]}
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export default function Default() {
             <img
               src={logoIMG}
               alt='react95 logo'
-              style={{ height: '20px', marginRight: '6px' }}
+              style={{ height: '20px', marginRight: '14px' }}
             />
             Start
           </div>

@@ -53,7 +53,7 @@ export function XSushiStaking() {
     hash: data3ggXLeave?.hash,
   })
   const { activeTab } = state;
-  return <WindowContent>
+  return <div className="window-content">
 
     
     <Tabs value={activeTab} onChange={handleChange}>
@@ -74,7 +74,7 @@ export function XSushiStaking() {
           e.target.value !== "" ? setStaken00dAmount(e.target.value) : setStaken00dAmount(0)
         }}></TextField><MaxButton changeFunction={setStaken00dAmount} target={displayNum(n00dbal)}></MaxButton>
         {isn00dApproveSuccess || new bn(n00dAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(staken00dAmount)) ?
-          <Button onClick={() => writen00dXEnter?.()}>{isn00dXEnterLoading? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => writen00dApprove?.()}>{isn00dApproveLoading ? 'Approving...' : 'Approve'}</Button>}
+          <div className="button" onClick={() => writen00dXEnter?.()}>{isn00dXEnterLoading? 'Staking...' : 'Stake'}</div> : <div className="button" onClick={() => writen00dApprove?.()}>{isn00dApproveLoading ? 'Approving...' : 'Approve'}</div>}
       </Fieldset>
         <Fieldset label='Get X3gg'>
           <p>3gg balance: {displayNum(eggbal)}</p>
@@ -83,7 +83,7 @@ export function XSushiStaking() {
             e.target.value !== "" ? setStake3ggAmount(e.target.value) : setStake3ggAmount(0)
           }}></TextField><MaxButton changeFunction={setStake3ggAmount} target={displayNum(eggbal)}></MaxButton>
           {is3ggApproveSuccess || new bn(eggAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(stake3ggAmount)) ?
-            <Button onClick={() => write3ggXEnter?.()}>{is3ggXEnterLoading? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => write3ggApprove?.()}>{is3ggApproveLoading ? 'Approving...' : 'Approve'}</Button>}
+            <div className="button" onClick={() => write3ggXEnter?.()}>{is3ggXEnterLoading? 'Staking...' : 'Stake'}</div> : <div className="button" onClick={() => write3ggApprove?.()}>{is3ggApproveLoading ? 'Approving...' : 'Approve'}</div>}
         </Fieldset></> : <></>} */}
 
 
@@ -95,7 +95,7 @@ export function XSushiStaking() {
         <TextField placeholder="n00d" value={`${unstaken00dAmount}`.replace(/^0+/, '')} onChange={e => {
           e.target.value !== "" ? setUnstaken00dAmount(e.target.value) : setUnstaken00dAmount(0)
         }}></TextField><MaxButton changeFunction={setUnstaken00dAmount} target={displayNum(Xn00dbal)}></MaxButton>
-        <Button onClick={() => writen00dXLeave?.()}>{isn00dXLeaveLoading ? 'Unstaking...' : 'Unstake'}</Button>
+        <div className="button" onClick={() => writen00dXLeave?.()}>{isn00dXLeaveLoading ? 'Unstaking...' : 'Unstake'}</div>
       </Fieldset>
         <Fieldset label='Get back 3gg'>
           <p>X3gg balance: {displayNum(X3ggbal)}</p>
@@ -103,7 +103,7 @@ export function XSushiStaking() {
           <TextField placeholder="3gg" value={`${unstake3ggAmount}`.replace(/^0+/, '')} onChange={e => {
             e.target.value !== "" ? setUnstake3ggAmount(e.target.value) : setUnstake3ggAmount(0)
           }}></TextField><MaxButton changeFunction={setUnstake3ggAmount} target={displayNum(X3ggbal)}></MaxButton>
-          <Button onClick={() => write3ggXLeave?.()}>{is3ggXLeaveLoading ? 'Unstaking...' : 'Unstake'}</Button>
+          <div className="button" onClick={() => write3ggXLeave?.()}>{is3ggXLeaveLoading ? 'Unstaking...' : 'Unstake'}</div>
         </Fieldset></> : <></>}
 
     </TabBody>
@@ -111,5 +111,5 @@ export function XSushiStaking() {
     <Panel variant='well' className='footer' style={{width: '100%'}}>
           This is beta software. Always check smart contracts. Use at your own risk.
         </Panel>
-  </WindowContent>
+  </div>
 }

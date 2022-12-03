@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Button,
-  WindowContent,
   Fieldset,
   Anchor,
   TextField,
@@ -158,7 +156,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
   const { activeTab } = state;
   return (
 
-    <WindowContent>
+    <div className='window-content'>
       <Tabs value={activeTab} onChange={setActiveTab}>
       <Tab value={0}>Analytics</Tab>
         {/* <Tab value={1}>Stake</Tab> */}
@@ -193,7 +191,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 }} />
                 <MaxButton changeFunction={setXn00dStakeAmount} target={displayNum(Xn00dbal)}></MaxButton>
                 {isXn00dApproveSuccess || new bn(Xn00dAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(Xn00dStakeAmount)) ?
-                  <Button disabled={Xn00dStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => writeXn00dDeposit?.()}>{isXn00dDepositLoading ? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => writeXn00dApprove?.()}>{isXn00dApproveLoading ? 'Approving...' : 'Approve'}</Button>}&nbsp;
+                  <div className='button' disabled={Xn00dStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => writeXn00dDeposit?.()}>{isXn00dDepositLoading ? 'Staking...' : 'Stake'}</div> : <div className='button' onClick={() => writeXn00dApprove?.()}>{isXn00dApproveLoading ? 'Approving...' : 'Approve'}</div>}&nbsp;
                 {Xn00dStaked?.data?.[0]?.gt(BigNumber.from(1000000000000)) ? <p>Please unstake before staking again.</p> : <></>}
               </Fieldset>
               <Fieldset label='X3gg'>
@@ -209,7 +207,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 }} />
                 <MaxButton changeFunction={setX3ggStakeAmount} target={displayNum(X3ggbal)}></MaxButton>
                 {isX3ggApproveSuccess || new bn(X3ggAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(X3ggStakeAmount)) ?
-                  <Button disabled={X3ggStaked?.data?.[0]?.gt(BigNumber.from(10000000000000))} onClick={() => writeX3ggDeposit?.()}>{isX3ggDepositLoading ? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => writeX3ggApprove?.()}>{isX3ggApproveLoading ? 'Approving...' : 'Approve'}</Button>}&nbsp;
+                  <div className='button' disabled={X3ggStaked?.data?.[0]?.gt(BigNumber.from(10000000000000))} onClick={() => writeX3ggDeposit?.()}>{isX3ggDepositLoading ? 'Staking...' : 'Stake'}</div> : <div className='button' onClick={() => writeX3ggApprove?.()}>{isX3ggApproveLoading ? 'Approving...' : 'Approve'}</div>}&nbsp;
                 {X3ggStaked?.data?.[0]?.gt(BigNumber.from(1000000000000)) ? <p>Please unstake before staking again.</p> : <></>}
               </Fieldset>
               <br />
@@ -230,7 +228,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 }} />
                 <MaxButton changeFunction={setn00dETHStakeAmount} target={displayNum(n00dETHbal)}></MaxButton>
                 {isn00dETHApproveSuccess || new bn(n00dETHAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(n00dETHStakeAmount)) ?
-                  <Button disabled={n00dETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => writen00dETHDeposit?.()}>{isn00dETHDepositLoading ? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => writen00dETHApprove?.()}>{isn00dETHApproveLoading ? 'Approving...' : 'Approve'}</Button>}&nbsp;
+                  <div className='button' disabled={n00dETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => writen00dETHDeposit?.()}>{isn00dETHDepositLoading ? 'Staking...' : 'Stake'}</div> : <div className='button' onClick={() => writen00dETHApprove?.()}>{isn00dETHApproveLoading ? 'Approving...' : 'Approve'}</div>}&nbsp;
                 {n00dETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000)) ? <p>Please unstake before staking again.</p> : <></>}
               </Fieldset>
               <Fieldset label='3gg/ETH'>
@@ -246,7 +244,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 }} />
                 <MaxButton changeFunction={seteggETHStakeAmount} target={displayNum(eggETHbal)}></MaxButton>
                 {is3ggETHApproveSuccess || new bn(eggETHAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(eggETHStakeAmount)) ?
-                  <Button disabled={eggETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => write3ggETHDeposit?.()}>{is3ggETHDepositLoading ? 'Staking...' : 'Stake'}</Button> : <Button onClick={() => write3ggETHApprove?.()}>{is3ggETHApproveLoading ? 'Approving...' : 'Approve'}</Button>}&nbsp;
+                  <div className='button' disabled={eggETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000))} onClick={() => write3ggETHDeposit?.()}>{is3ggETHDepositLoading ? 'Staking...' : 'Stake'}</div> : <div className='button' onClick={() => write3ggETHApprove?.()}>{is3ggETHApproveLoading ? 'Approving...' : 'Approve'}</div>}&nbsp;
                 {eggETHStaked?.data?.[0]?.gt(BigNumber.from(1000000000000)) ? <p>Please unstake before staking again.</p> : <></>}
               </Fieldset>
               <br />
@@ -273,7 +271,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                   e.target.value !== "" ? setunXn00dStakeAmount(e.target.value) : setunXn00dStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunXn00dStakeAmount} target={displayNum2(Xn00dStaked?.data?.[0])}></MaxButton>
-                <Button onClick={() => writeXn00dWithdraw?.()}>{isXn00dWithdrawLoading ? 'Unstaking...' : 'Unstake'}</Button>&nbsp;
+                <div className='button' onClick={() => writeXn00dWithdraw?.()}>{isXn00dWithdrawLoading ? 'Unstaking...' : 'Unstake'}</div>&nbsp;
               </Fieldset>
               <br />
               <Fieldset label='X3gg'>
@@ -289,7 +287,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                   e.target.value !== "" ? setunX3ggStakeAmount(e.target.value) : setunX3ggStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunX3ggStakeAmount} target={displayNum2(X3ggStaked?.data?.[0])}></MaxButton>
-                <Button onClick={() => writeX3ggWithdraw?.()}>{isX3ggWithdrawLoading ? 'Unstaking...' : 'Unstake'}</Button>&nbsp;
+                <div className='button' onClick={() => writeX3ggWithdraw?.()}>{isX3ggWithdrawLoading ? 'Unstaking...' : 'Unstake'}</div>&nbsp;
               </Fieldset>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -310,7 +308,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                   e.target.value !== "" ? setunn00dETHStakeAmount(e.target.value) : setunn00dETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunn00dETHStakeAmount} target={displayNum2(n00dETHStaked?.data?.[0])}></MaxButton>
-                <Button onClick={() => writen00dETHWithdraw?.()}>{isn00dETHWithdrawLoading ? 'Unstaking...' : 'Unstake'}</Button>&nbsp;
+                <div className='button' onClick={() => writen00dETHWithdraw?.()}>{isn00dETHWithdrawLoading ? 'Unstaking...' : 'Unstake'}</div>&nbsp;
               </Fieldset>
               <Fieldset label='3gg/ETH'>
                 Emission: {emission[2] / Math.min(...emission)}x<span role='img' aria-label='😍'>
@@ -327,7 +325,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                   e.target.value !== "" ? setuneggETHStakeAmount(e.target.value) : setuneggETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setuneggETHStakeAmount} target={displayNum2(eggETHStaked?.data?.[0])}></MaxButton>
-                <Button onClick={() => write3ggETHWithdraw?.()}>{is3ggETHWithdrawLoading ? 'Unstaking...' : 'Unstake'}</Button>&nbsp;
+                <div className='button' onClick={() => write3ggETHWithdraw?.()}>{is3ggETHWithdrawLoading ? 'Unstaking...' : 'Unstake'}</div>&nbsp;
               </Fieldset>
 
             </div>
@@ -347,7 +345,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 <br></br>Pending 3gg rewards: {displayNum(Xn00dReward) * 2857142}<br></br>
                 (50% will be donated to single stakers if claimed before {displayDate(Xn00dStaked?.data?.[2], 86400 * 14)})
                 <br></br>
-                <Button onClick={() => writeXn00dWithdraw0?.()}>{isXn00dWithdrawLoading0 ? 'Claiming...' : 'Claim'}</Button>&nbsp;
+                <div className='button' onClick={() => writeXn00dWithdraw0?.()}>{isXn00dWithdrawLoading0 ? 'Claiming...' : 'Claim'}</div>&nbsp;
               </Fieldset>
               <br />
               <Fieldset label='X3gg'>
@@ -358,7 +356,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 <br></br>Pending 3gg rewards: {displayNum(X3ggReward) * 9523809}<br></br>
                 (50% will be donated to single stakers if claimed before {displayDate(X3ggStaked?.data?.[2], 86400 * 14)})
                 <br></br>
-                <Button onClick={() => writeX3ggWithdraw0?.()}>{isX3ggWithdrawLoading0 ? 'Claiming...' : 'Claim'}</Button>&nbsp;
+                <div className='button' onClick={() => writeX3ggWithdraw0?.()}>{isX3ggWithdrawLoading0 ? 'Claiming...' : 'Claim'}</div>&nbsp;
               </Fieldset>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -375,7 +373,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 (50% will be donated to single stakers if claimed before {displayDate(n00dETHStaked?.data?.[2], 86400 * 7)})
                 <br></br>
 
-                <Button onClick={() => writen00dETHWithdraw0?.()}>{isn00dETHWithdrawLoading0 ? 'Claiming...' : 'Claim'}</Button>&nbsp;
+                <div className='button' onClick={() => writen00dETHWithdraw0?.()}>{isn00dETHWithdrawLoading0 ? 'Claiming...' : 'Claim'}</div>&nbsp;
               </Fieldset>
               <Fieldset label='3gg/ETH'>
                 Emission: {emission[2] / Math.min(...emission)}x<span role='img' aria-label='😍'>
@@ -387,7 +385,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 <br></br>Pending 3gg rewards: {displayNum(eggETHReward) * 14814814}<br></br>
                 (50% will be donated to single stakers if claimed before {displayDate(eggETHStaked?.data?.[2], 86400 * 7)})
                 <br></br>
-                <Button onClick={() => write3ggETHWithdraw0?.()}>{is3ggETHWithdrawLoading0 ? 'Claiming...' : 'Claim'}</Button>&nbsp;
+                <div className='button' onClick={() => write3ggETHWithdraw0?.()}>{is3ggETHWithdrawLoading0 ? 'Claiming...' : 'Claim'}</div>&nbsp;
 
               </Fieldset>
 
@@ -401,7 +399,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
       <Panel variant='well' className='footer' style={{ width: '100%' }}>
         This is beta software. Always check smart contracts. Use at your own risk.
       </Panel>
-    </WindowContent>
+    </div>
 
   )
 }
