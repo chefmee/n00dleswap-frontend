@@ -12,6 +12,10 @@ export const Wrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background: rgb(165,60,255);
+        background: linear-gradient(94deg, rgba(165,60,255,1) 57%, rgba(230,22,210,1) 100%);
+        padding: 14px;
+        border-radius: 10px 10px 0px 0px;      
       }
       .close-icon {
         display: inline-block;

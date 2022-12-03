@@ -67,6 +67,12 @@ body {
   cursor: pointer;
 }
 
+.window {
+  color: #ffffff;
+  background-color: #282c34;
+  border-radius: 10px 10px 0px 0px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

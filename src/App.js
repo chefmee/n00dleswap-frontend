@@ -126,7 +126,7 @@ export default function Default() {
                   }}
                 default={{
                   x: (width / 2 - 200) + (i * 40),
-                  y: 50 + (i * 40),
+                  y: 100 + (i * 40),
                   width: 1000,
                 }}
                 position={windowPositions[window]}
@@ -145,21 +145,23 @@ export default function Default() {
                 }}
                 maxWidth={'100vw'}
               >
-                {/* <Window  style={{ width: '100%', height: '100%' }} className="window">
-
-                  <WindowHeader active={i === windowStack.length - 1} className='window-header'>
+                <div className="window">
+                  <div active={i === windowStack.length - 1} className='window-header'>
                     <span>{window}.exe</span>
                     <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '0.25rem' }}>
-                      <Button onClick={(event) => {
+                      <div onClick={(event) => {
                         setWindowStack({ action: 'del', window: window });
                         setWelcomeWindow(!welcomeWindow);
                         event.stopPropagation();
                       }}>
                         <span className='close-icon' />
-                      </Button>
+                      </div>
                     </div>
-                  </WindowHeader><div style={{overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100% - 2.5em)'}}>{windows[window]}</div>
-                </Window> */}
+                  </div>
+                  <div style={{overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100% - 2.5em)'}}>
+                    {windows[window]}
+                  </div>
+                </div>
               </Rnd>
             );
           })
