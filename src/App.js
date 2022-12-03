@@ -1,12 +1,6 @@
 import React from 'react';
-import Draggable from 'react-draggable';
-import BigNumber from 'bignumber.js';
-import { ThemeProvider } from 'styled-components';
-// original Windows95 font (optionally)
 import { useAccount, useConnect, useEnsName, useNetwork } from 'wagmi';
-import { createAlchemyWeb3 } from '@alch/alchemy-web3';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import ERC721 from './abis/ERC721.json';
 import { Wrapper, GlobalStyles } from './Styles';
 import logoIMG from './assets/noodlogo.png';
 import InfoWindow from './windows/Info';
@@ -26,7 +20,6 @@ import {
   useWindowSize,
 } from '@react-hook/window-size';
 import './App.css';
-
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);

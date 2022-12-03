@@ -73,6 +73,22 @@ body {
   border-radius: 10px 10px 0px 0px;
 }
 
+.window-content {
+  padding: 16px;
+}
+
+.button {
+  background-image: url('assets/PNG//Button1.png');
+  background-repeat: round;
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.anchor {
+
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
