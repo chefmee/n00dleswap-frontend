@@ -70,18 +70,18 @@ export function XSushiStaking() {
       {/* {activeTab === 1 ? <><Fieldset label='Get Xn00d'>
         <p>n00d balance: {displayNum(n00dbal)}</p>
         <p>Amount to stake</p>
-        <TextField placeholder="n00d" value={`${staken00dAmount}`.replace(/^0+/, '')} onChange={e => {
+        <input className="input" placeholder="n00d" value={`${staken00dAmount}`.replace(/^0+/, '')} onChange={e => {
           e.target.value !== "" ? setStaken00dAmount(e.target.value) : setStaken00dAmount(0)
-        }}></TextField><MaxButton changeFunction={setStaken00dAmount} target={displayNum(n00dbal)}></MaxButton>
+        }}></input><MaxButton changeFunction={setStaken00dAmount} target={displayNum(n00dbal)}></MaxButton>
         {isn00dApproveSuccess || new bn(n00dAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(staken00dAmount)) ?
           <div className="button" onClick={() => writen00dXEnter?.()}>{isn00dXEnterLoading? 'Staking...' : 'Stake'}</div> : <div className="button" onClick={() => writen00dApprove?.()}>{isn00dApproveLoading ? 'Approving...' : 'Approve'}</div>}
       </Fieldset>
         <Fieldset label='Get X3gg'>
           <p>3gg balance: {displayNum(eggbal)}</p>
           <p>Amount to stake</p>
-          <TextField placeholder="3gg" value={`${stake3ggAmount}`.replace(/^0+/, '')} onChange={e => {
+          <input className="input" placeholder="3gg" value={`${stake3ggAmount}`.replace(/^0+/, '')} onChange={e => {
             e.target.value !== "" ? setStake3ggAmount(e.target.value) : setStake3ggAmount(0)
-          }}></TextField><MaxButton changeFunction={setStake3ggAmount} target={displayNum(eggbal)}></MaxButton>
+          }}></input><MaxButton changeFunction={setStake3ggAmount} target={displayNum(eggbal)}></MaxButton>
           {is3ggApproveSuccess || new bn(eggAllowance?.data?.toString() ?? 0).div(new bn('1000000000000000000')).gte(new bn(stake3ggAmount)) ?
             <div className="button" onClick={() => write3ggXEnter?.()}>{is3ggXEnterLoading? 'Staking...' : 'Stake'}</div> : <div className="button" onClick={() => write3ggApprove?.()}>{is3ggApproveLoading ? 'Approving...' : 'Approve'}</div>}
         </Fieldset></> : <></>} */}
@@ -92,17 +92,17 @@ export function XSushiStaking() {
       {activeTab === 1 ? <><Fieldset label='Get back n00d'>
         <p>Xn00d balance: {displayNum(Xn00dbal)}</p>
         <p>Amount to unstake</p>
-        <TextField placeholder="n00d" value={`${unstaken00dAmount}`.replace(/^0+/, '')} onChange={e => {
+        <input className="input" placeholder="n00d" value={`${unstaken00dAmount}`.replace(/^0+/, '')} onChange={e => {
           e.target.value !== "" ? setUnstaken00dAmount(e.target.value) : setUnstaken00dAmount(0)
-        }}></TextField><MaxButton changeFunction={setUnstaken00dAmount} target={displayNum(Xn00dbal)}></MaxButton>
+        }}></input><MaxButton changeFunction={setUnstaken00dAmount} target={displayNum(Xn00dbal)}></MaxButton>
         <div className="button" onClick={() => writen00dXLeave?.()}>{isn00dXLeaveLoading ? 'Unstaking...' : 'Unstake'}</div>
       </Fieldset>
         <Fieldset label='Get back 3gg'>
           <p>X3gg balance: {displayNum(X3ggbal)}</p>
           <p>Amount to unstake</p>
-          <TextField placeholder="3gg" value={`${unstake3ggAmount}`.replace(/^0+/, '')} onChange={e => {
+          <input className="input" placeholder="3gg" value={`${unstake3ggAmount}`.replace(/^0+/, '')} onChange={e => {
             e.target.value !== "" ? setUnstake3ggAmount(e.target.value) : setUnstake3ggAmount(0)
-          }}></TextField><MaxButton changeFunction={setUnstake3ggAmount} target={displayNum(X3ggbal)}></MaxButton>
+          }}></input><MaxButton changeFunction={setUnstake3ggAmount} target={displayNum(X3ggbal)}></MaxButton>
           <div className="button" onClick={() => write3ggXLeave?.()}>{is3ggXLeaveLoading ? 'Unstaking...' : 'Unstake'}</div>
         </Fieldset></> : <></>}
 

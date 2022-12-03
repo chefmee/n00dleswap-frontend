@@ -77,6 +77,11 @@
   cursor: pointer;
 }
 
+.input {
+  padding: 6px;
+  font-size: 14px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -233,7 +233,7 @@ export function Swap() {
         label='selling'
         name='buyorsell' />
     </Fieldset>
-    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT Address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
+    {nfts.length !== 1 ? <>Filter: <input className="input" placeholder="keyword or NFT Address" onChange={e => dispatch(setKeyword(e.target.value))}></input></> :
       <div className="button" onClick={() => {
         setNfts([])
         dispatch(setKeyword(''))
@@ -261,7 +261,7 @@ export function Swap() {
       </Table>
     }
 
-    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectedNFTs.length}</p>
+    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <input className="input" onChange={e => dispatch(setAmount(e.target.value))} type='number'></input> : selectedNFTs.length}</p>
     <p>You {isPurchase ? 'pay' : 'get'}: {new BigNumber(total)?.dividedBy('1000000000000000000').toString()} ETH</p>
     {
       amount > 0 && isPurchase ? <>

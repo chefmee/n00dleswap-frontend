@@ -186,7 +186,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 You have: {displayNum(Xn00dbal)}
                 <br></br>
                 You stake:&nbsp;
-                <TextField value={`${Xn00dStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${Xn00dStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setXn00dStakeAmount(e.target.value) : setXn00dStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setXn00dStakeAmount} target={displayNum(Xn00dbal)}></MaxButton>
@@ -202,7 +202,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 You have: {displayNum(X3ggbal)}
                 <br></br>
                 You stake:&nbsp;
-                <TextField value={`${X3ggStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${X3ggStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setX3ggStakeAmount(e.target.value) : setX3ggStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setX3ggStakeAmount} target={displayNum(X3ggbal)}></MaxButton>
@@ -223,7 +223,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 You have: {displayNum(n00dETHbal)}
                 <br></br>
                 You stake:&nbsp;
-                <TextField value={`${n00dETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${n00dETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setn00dETHStakeAmount(e.target.value) : setn00dETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setn00dETHStakeAmount} target={displayNum(n00dETHbal)}></MaxButton>
@@ -239,7 +239,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 You have: {displayNum(eggETHbal)}
                 <br></br>
                 You stake:&nbsp;
-                <TextField value={`${eggETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${eggETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? seteggETHStakeAmount(e.target.value) : seteggETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={seteggETHStakeAmount} target={displayNum(eggETHbal)}></MaxButton>
@@ -267,7 +267,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 (50% will be donated to single stakers if claimed before {displayDate(Xn00dStaked?.data?.[2], 86400 * 14)})
                 <br></br>
                 You unstake:&nbsp;
-                <TextField value={`${unXn00dStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${unXn00dStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setunXn00dStakeAmount(e.target.value) : setunXn00dStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunXn00dStakeAmount} target={displayNum2(Xn00dStaked?.data?.[0])}></MaxButton>
@@ -283,7 +283,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 (50% will be donated to single stakers if claimed before {displayDate(X3ggStaked?.data?.[2], 86400 * 14)})
                 <br></br>
                 You unstake:&nbsp;
-                <TextField value={`${unX3ggStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${unX3ggStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setunX3ggStakeAmount(e.target.value) : setunX3ggStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunX3ggStakeAmount} target={displayNum2(X3ggStaked?.data?.[0])}></MaxButton>
@@ -304,7 +304,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 (50% will be donated to single stakers if claimed before {displayDate(n00dETHStaked?.data?.[2], 86400 * 7)})
                 <br></br>
                 You unstake:&nbsp;
-                <TextField value={`${unn00dETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${unn00dETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setunn00dETHStakeAmount(e.target.value) : setunn00dETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setunn00dETHStakeAmount} target={displayNum2(n00dETHStaked?.data?.[0])}></MaxButton>
@@ -321,7 +321,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
                 (50% will be donated to single stakers if claimed before {displayDate(eggETHStaked?.data?.[2], 86400 * 7)})
                 <br></br>
                 You unstake:&nbsp;
-                <TextField value={`${uneggETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
+                <input className="input" value={`${uneggETHStakeAmount}`.replace(/^0+/, '')} onChange={e => {
                   e.target.value !== "" ? setuneggETHStakeAmount(e.target.value) : setuneggETHStakeAmount(0)
                 }} />
                 <MaxButton changeFunction={setuneggETHStakeAmount} target={displayNum2(eggETHStaked?.data?.[0])}></MaxButton>

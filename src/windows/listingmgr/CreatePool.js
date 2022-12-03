@@ -122,8 +122,8 @@ export function CreatePool({ type }) {
           name='lmode' />
       </Tooltip>
     </Fieldset>
-    <p>Start Price (ETH): <TextField onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></TextField></p>
-    <p>Price Increment (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></p>
+    <p>Start Price (ETH): <input className="input" onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></input></p>
+    <p>Price Increment (ETH): <input className="input" onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></input></p>
     <p>The first NFT being sold in this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) + Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
     <div className="button" disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</div><br></br>
