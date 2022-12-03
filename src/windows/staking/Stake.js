@@ -181,7 +181,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
               <Fieldset label='Xn00d'>
                 Emission: {emission[1] / Math.min(...emission)}x
                 <br></br>
-                <Anchor onClick={() => setWindowStack({ action: 'push', window: 'x' })}>Get Xn00d</Anchor>
+                <a className='anchor' onClick={() => setWindowStack({ action: 'push', window: 'x' })}>Get Xn00d</a>
                 <br></br>
                 You have: {displayNum(Xn00dbal)}
                 <br></br>
@@ -197,7 +197,7 @@ export default function StakeWindow({ emission, depositoryAddress }) {
               <Fieldset label='X3gg'>
                 Emission: {emission[3] / Math.min(...emission)}x
                 <br></br>
-                <Anchor onClick={() => setWindowStack({ action: 'push', window: 'x' })}>Get X3gg</Anchor>
+                <a className='anchor' onClick={() => setWindowStack({ action: 'push', window: 'x' })}>Get X3gg</a>
                 <br></br>
                 You have: {displayNum(X3ggbal)}
                 <br></br>

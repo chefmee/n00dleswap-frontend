@@ -75,7 +75,7 @@ export function CreatePool({ type }) {
   }, [isSuccess])
   
   return <div className="window-content">
-    <div>You are listing {selectedNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectedNFTs[0]?.split('|*|')[0]}>{selectedNFTs[0]?.split('|*|')[0]}</Anchor></div>
+    <div>You are listing {selectedNFTs.length} NFT(s) from <a className='anchor' target={'_blank'} href={'https://etherscan.io/address/' + selectedNFTs[0]?.split('|*|')[0]} rel="noreferrer">{selectedNFTs[0]?.split('|*|')[0]}</a></div>
     <Table>
       <TableHead>
         <TableRow head>

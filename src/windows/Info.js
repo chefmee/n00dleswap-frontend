@@ -50,11 +50,11 @@ export default function InfoWindow({ setWelcomeWindow, setIframesrc, isEligible 
       <br></br><br></br>
       <p>[Tokens]</p>
       <p><b>Token addresses has been updated!</b></p>
-      <p>NOOD: 0x147ab744f058a52e828bee84a9c58660f2ff5ff9 <div className='anchor' onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0x147ab744f058a52e828bee84a9c58660f2ff5ff9&inputCurrency=ETH&use=V2')}>(Trade)</div></p>
-      <p>EGG: 0xdAE5add81B1fa1b04C0DF225F0C3A029b93cB91B <div className='anchor' onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xdae5add81b1fa1b04c0df225f0c3a029b93cb91b&use=V2')}>(Trade)</div></p>
+      <p>NOOD: 0x147ab744f058a52e828bee84a9c58660f2ff5ff9 <a className='anchor' onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0x147ab744f058a52e828bee84a9c58660f2ff5ff9&inputCurrency=ETH&use=V2')}>(Trade)</a></p>
+      <p>EGG: 0xdAE5add81B1fa1b04C0DF225F0C3A029b93cB91B <a className='anchor' onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xdae5add81b1fa1b04c0df225f0c3a029b93cb91b&use=V2')}>(Trade)</a></p>
       <br></br>
       <p>[Stats]</p>
-      <p>Dune Analytics: <div className='anchor' onClick={() => window.open('https://dune.com/n00dlelover/n00dle-lovers')}>https://dune.com/n00dlelover/n00dle-lovers</div></p>
+      <p>Dune Analytics: <a className='anchor' onClick={() => window.open('https://dune.com/n00dlelover/n00dle-lovers')}>https://dune.com/n00dlelover/n00dle-lovers</a></p>
       <br></br>
       <p>[Docs]</p>
       <p>Intro:  <u color='blue' onClick={() => setIframesrc("https://mirror.xyz/n00dleswap.eth/LXfky6hGx3jxfKWfE8i03fXWzmOJjnVWH5DNS9RC_u8")}>Link</u> </p>
