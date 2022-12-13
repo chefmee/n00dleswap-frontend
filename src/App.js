@@ -36,8 +36,8 @@ import { Rnd } from 'react-rnd';
 import {
   useWindowSize,
 } from '@react-hook/window-size';
+import makeBlockie from 'ethereum-blockies-base64';
 import { WalletOptionsModal } from "./windows/WalletOptionsModal";
-
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -237,7 +237,8 @@ export default function Default() {
                     <span role='img' aria-label='🔗'>
                       🔗
                     </span>
-                    {address ? 'Connected' : 'Connect Wallet'}
+                    <img src={makeBlockie(address)} style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft: '10px'}}/>
+                    {address ? `Connected (${address})` : 'Connect Wallet'}
                   </ListItem>
                   {/* <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
