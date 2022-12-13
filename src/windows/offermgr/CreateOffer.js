@@ -180,6 +180,7 @@ export function CreateOffer({ type }) {
     isSuccess: isCreateSuccess,
     isError: isCreateError,
   } = useWaitForTransaction({
+
     hash: createPoolTxData?.hash,
   });
 
@@ -327,4 +328,5 @@ export function CreateOffer({ type }) {
       </Button>
     </WindowContent>
   );
+
 }

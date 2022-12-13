@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: url('noodlebar.png');
+  background-image: url('noodlebar.jpg');
 }
 
 .App-logo {
@@ -9,7 +9,7 @@
 }
 
 body {
-  
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
