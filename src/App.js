@@ -15,7 +15,7 @@ import {
 // pick a theme of your choice
 import original from 'react95/dist/themes/original';
 // original Windows95 font (optionally)
-import { useAccount, useConnect, useEnsName, useNetwork } from 'wagmi';
+import { useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork  } from 'wagmi';
 import { createAlchemyWeb3 } from '@alch/alchemy-web3';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import ERC721 from './abis/ERC721.json';
@@ -104,7 +104,11 @@ export default function Default() {
     _setIframesrc(x);
   }
   const { chain } = useNetwork();
-  if (chain?.id && chain?.id != 1 && chain?.id != 5) alert(`Network ${chain?.id} not supported`);
+  const { switchNetwork } = useSwitchNetwork()
+
+  if (chain?.id && chain?.id != 1 && chain?.id != 5) {
+    switchNetwork?.(1) // switch to ethereum network
+  };
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const { connect } = useConnect({
