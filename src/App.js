@@ -112,6 +112,7 @@ export default function Default() {
   });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
+<<<<<<< HEAD
 
   const replacerFunc = () => {
     const visited = new WeakSet();
@@ -148,6 +149,8 @@ export default function Default() {
     window.localStorage.setItem('windowSizes', JSON.stringify(normalizedWindowSizes, replacerFunc()))
   }, [windowSizes]);
 
+=======
+>>>>>>> 08907abaec6e7b043daead5b49bf14ce72cf6af8
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
