@@ -5,8 +5,6 @@ import { select, unselectAll } from "../../reducers/selectNFT";
 import { open as openWindow } from "../../reducers/openWindow";
 import { useAccount, useNetwork } from "wagmi";
 import axios from "axios";
-import { setModalStatus } from "../../reducers/modal";
-import { ModalTypes } from "../../constants/modalTypes";
 export function MyNFTsSelector() {
   /**
    * Wagmi init
@@ -25,7 +23,7 @@ export function MyNFTsSelector() {
    * States
    */
   const [loadBar, setLoadBar] = React.useState(true);
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectedNFTs = useSelector((state) => state.selectNFT);
   const isInSelectedNFTs = (n) =>
     selectedNFTs.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
@@ -47,15 +45,6 @@ export function MyNFTsSelector() {
     }
     get();
   }, [address]);
-
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
   
   return (
     <WindowContent>
