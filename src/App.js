@@ -96,6 +96,7 @@ export default function Default() {
         const esheep = new window.eSheep();
         esheep.Start();
         setWindowStack({ action: "push", window: "n00d" });
+        if (address) setWindowStack({ action: "push", window: "walletSelector" });
         setInitialized(true);
       }
     }
@@ -134,7 +135,7 @@ export default function Default() {
   const { data: ensName } = useEnsName({ address });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
-  console.log(windowSizes);
+
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>

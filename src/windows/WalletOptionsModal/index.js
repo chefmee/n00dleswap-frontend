@@ -1,17 +1,19 @@
 import React from "react";
 import { List, ListItem, WindowContent } from "react95";
-import { useConnect } from "wagmi";
+import {useAccount, useConnect} from "wagmi";
 
 export function WalletOptionsModal() {
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
+
+  const { address } = useAccount()
 
   return (
     <WindowContent>
       <List>
         {connectors.map((connector) => (
           <ListItem
-            disabled={!connector.ready}
+            disabled={!connector.ready || !!address}
             key={connector.id}
             onClick={() => connect({ connector })}
           >
@@ -23,7 +25,9 @@ export function WalletOptionsModal() {
           </ListItem>
         ))}
       </List>
+        <br></br>
       {error && <p>{error.message}</p>}
+        {address && <p>Connected as {address}. Please disconnect from your wallet app.</p>}
     </WindowContent>
   );
 }
