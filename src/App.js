@@ -15,11 +15,30 @@ import {
 // pick a theme of your choice
 import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
-import { useAccount, useConnect, useEnsName, useNetwork } from "wagmi";
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import ERC721 from "./abis/ERC721.json";
-import { Wrapper, GlobalStyles } from "./Styles";
+
+import { useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork  } from 'wagmi';
+import { createAlchemyWeb3 } from '@alch/alchemy-web3';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import ERC721 from './abis/ERC721.json';
+import { Wrapper, GlobalStyles } from './Styles';
+
+import logoIMG from './assets/noodlogo.png';
+import InfoWindow from './windows/Info';
+import IexploreWindow from './windows/Iexplore';
+import StakeWindow from './windows/staking/Stake';
+import { MyNFTsSelector } from './windows/listingmgr/MyNFTsSelector';
+import { useDispatch, useSelector } from 'react-redux';
+import { open as openWindow } from './reducers/openWindow';
+import { CreatePool } from './windows/listingmgr/CreatePool';
+import { ImagePreview } from './windows/utils/ImagePreview';
+import { CreateOffer } from './windows/offermgr/CreateOffer';
+import { Swap } from './windows/marketplace/Swap';
+import { MyListings } from './windows/listingmgr/MyPools';
+import { XSushiStaking } from './windows/staking/xSushiStaking';
+import { Rnd } from 'react-rnd';
+import {
+  useWindowSize,
+} from '@react-hook/window-size';
 
 import logoIMG from "./assets/noodlogo.png";
 import InfoWindow from "./windows/Info";
@@ -122,8 +141,13 @@ export default function Default() {
     _setIframesrc(x);
   }
   const { chain } = useNetwork();
-  if (chain?.id && chain?.id != 1 && chain?.id != 5)
-    alert(`Network ${chain?.id} not supported`);
+
+  const { switchNetwork } = useSwitchNetwork()
+
+  if (chain?.id && chain?.id != 1 && chain?.id != 5) {
+    switchNetwork?.(1) // switch to ethereum network
+  };
+
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const [windowPositions, setWindowPositions] = React.useState({});
