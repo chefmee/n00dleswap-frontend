@@ -40,23 +40,6 @@ import {
   useWindowSize,
 } from '@react-hook/window-size';
 import { WalletOptionsModal } from "./windows/WalletOptionsModal";
-
-
-import logoIMG from "./assets/noodlogo.png";
-import InfoWindow from "./windows/Info";
-import IexploreWindow from "./windows/Iexplore";
-import StakeWindow from "./windows/staking/Stake";
-import { MyNFTsSelector } from "./windows/listingmgr/MyNFTsSelector";
-import { useDispatch, useSelector } from "react-redux";
-import { open as openWindow } from "./reducers/openWindow";
-import { CreatePool } from "./windows/listingmgr/CreatePool";
-import { ImagePreview } from "./windows/utils/ImagePreview";
-import { CreateOffer } from "./windows/offermgr/CreateOffer";
-import { Swap } from "./windows/marketplace/Swap";
-import { MyListings } from "./windows/listingmgr/MyPools";
-import { XSushiStaking } from "./windows/staking/xSushiStaking";
-import { Rnd } from "react-rnd";
-import { useWindowSize } from "@react-hook/window-size";
 import { Modal } from "./windows/Modal";
 import { setModalStatus } from "./reducers/modal";
 import { ModalTypes } from "./constants/modalTypes";
@@ -214,6 +197,7 @@ export default function Default() {
                 maxWidth={'100vw'}
                 maxHeight={'70vh'}
               >
+                <Window>
                 <WindowHeader
                   active={i === windowStack.length - 1}
                   className="window-header"
