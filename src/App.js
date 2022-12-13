@@ -136,14 +136,16 @@ export default function Default() {
 
   const { switchNetwork } = useSwitchNetwork()
 
-  if (chain?.id && chain?.id != 1 && chain?.id != 5) {
-  dispatch(setModalStatus({
-      type: ModalTypes.ERROR,
-      message: `Network ${chain?.id} not supported`
-    }))
-    switchNetwork?.(1) // switch to ethereum network
-    
-  };
+  React.useEffect(() => {
+    if (chain?.id && chain?.id != 1 && chain?.id != 5) {
+      dispatch(setModalStatus({
+        type: ModalTypes.ERROR,
+        message: `Network ${chain?.id} not supported. A switch network prompt is activated in Metamask to help you switch the network.`
+      }))
+      switchNetwork?.(1) // switch to ethereum network
+
+    }
+  }, [chain])
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const [windowPositions, setWindowPositions] = React.useState({});
