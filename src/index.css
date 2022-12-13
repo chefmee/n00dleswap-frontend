@@ -12,7 +12,7 @@ body {
   overflow-y: scroll;/* Optional: Adds an empty scrollbar to the right margin in case content grows vertically, creating a scrollbar.  Allows for better width calculations, as the browser pre-calculates width before scrollbar appears, avoiding page content shifting.*/
   margin: 0;
   padding: 0;
-  background-image: url('noodlebar.png');
+  background-image: url('noodlebar.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

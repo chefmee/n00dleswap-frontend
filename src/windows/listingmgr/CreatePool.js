@@ -12,10 +12,17 @@ import { open } from "../../reducers/openWindow";
 import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/pool";
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
+  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
+  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
 }
 const wethAddress = {
-  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
+  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+  '1': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+}
+
+const linearBondingAddress = {
+  '1': '0x5B6aC51d9B1CeDE0068a1B26533CAce807f883Ee',
+  '5': '0xaC6dcFF6E13132f075e36cA3a7F403236f869438'
 }
 
 export function CreatePool({ type }) {
@@ -55,7 +62,7 @@ export function CreatePool({ type }) {
     addressOrName: factoryAddress[chain?.id],
     contractInterface: LSSVMFactory,
     functionName: 'createPairERC20',
-    args: [[wethAddress[chain?.id], selectedNFTs[0]?.split('|*|')[0], '0xaC6dcFF6E13132f075e36cA3a7F403236f869438', address, 1,
+    args: [[wethAddress[chain?.id], selectedNFTs[0]?.split('|*|')[0], linearBondingAddress[chain?.id], address, 1,
     new BigNumber(priceIncrement).times(new BigNumber('1000000000000000000')).toFixed(0),
       "0",
     new BigNumber(startPrice).minus(new BigNumber(priceIncrement)).times(new BigNumber('1000000000000000000')).toFixed(0),

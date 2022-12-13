@@ -21,17 +21,21 @@ import { ModalTypes } from "../../constants/modalTypes";
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
+  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
+  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
 }
 const routerAddress = {
-  '5': '0xaa71eB729daE61883E590DB9F365E3f8Ec11c7bC'
+  '5': '0xaa71eB729daE61883E590DB9F365E3f8Ec11c7bC',
+  '1': '0x39E923b15cEAa2c001B75ab3A29F28E7774aFff5'
 }
 
 const alchemyAddress = {
-  '5': 'https://eth-goerli.g.alchemy.com/v2/' + process.env.REACT_APP_ALCHEMY_API_TOKEN
+  '5': 'https://eth-goerli.g.alchemy.com/v2/' + process.env.REACT_APP_ALCHEMY_API_TOKEN,
+  '1': 'https://eth-mainnet.g.alchemy.com/v2/' + process.env.REACT_APP_ALCHEMY_API_TOKEN
 }
 const wethAddress = {
-  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
+  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+  '1': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 }
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
