@@ -2,21 +2,25 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const selectNFTSlice = createSlice({
   name: 'selectedNFTSwap',
-  initialState: [],
+  initialState: {
+    selectNFTs: [],
+    isSameCollection: true,
+  },
   reducers: {
     select:  (ref, raction) => {
       const {payload: action} = raction
-      if (!ref.includes(action.address + '|*|' + action.id+ '|*|'+ action.imageUrl +  '|*|' + action.name)) {
-        if (ref[0] && ref[0]?.split('|*|')[0] !== action.address) {
-          alert('Can only select NFTs from the same collection')
+      if (!ref.selectNFTs.includes(action.address + '|*|' + action.id+ '|*|'+ action.imageUrl +  '|*|' + action.name)) {
+        if (ref.selectNFTs[0] && ref.selectNFTs[0]?.split('|*|')[0] !== action.address) {
+          ref.isSameCollection = false;
           return ref
         }
-        ref.push(action.address + '|*|' + action.id+ '|*|' + action.imageUrl +  '|*|' + action.name)
+        ref.selectNFTs.push(action.address + '|*|' + action.id+ '|*|' + action.imageUrl +  '|*|' + action.name)
       }
-      else ref.splice(ref.indexOf(action.address + '|*|' + action.id+ '|*|' + action.imageUrl +  '|*|' + action.name), 1)
+      else ref.selectNFTs.splice(ref.selectNFTs.indexOf(action.address + '|*|' + action.id+ '|*|' + action.imageUrl +  '|*|' + action.name), 1)
+      ref.isSameCollection = true;
     },
     unselectAll: (ref) => {
-      ref = []
+      ref.selectNFTs = []
       return ref
     } 
   },

@@ -9,6 +9,8 @@ import Web3 from "web3";
 import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
+import { setModalStatus } from "../../reducers/modal";
+import { usePrompt } from "../../hooks/usePrompt";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
@@ -73,7 +75,12 @@ export function CreateOffer({ type }) {
    * Effects
    */
   React.useEffect(() => {
-    if (isPrepareCreateError && !error.message.includes('user rejected transaction')) alert('Create pool error. Is the address you entered a NFT cotract address?')
+    if (isPrepareCreateError && !error.message.includes('user rejected transaction')) {
+      dispatch(setModalStatus({
+        type: 'error',
+        message: 'Create pool error. Is the address you entered a NFT cotract address?'
+      }))
+    }
   }, [isPrepareCreateError])
   React.useEffect(() => {
     async function get() {
