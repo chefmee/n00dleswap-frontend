@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureChains, chain } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import store from './store.js'
 import { Provider } from 'react-redux'
 
@@ -23,6 +25,15 @@ const { chains, provider, webSocketProvider } = configureChains(
 )
 const client = createClient({
   autoConnect: true,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+  ],
   provider,
   webSocketProvider,
 })
