@@ -1,23 +1,22 @@
-import { Anchor, Button, TextField, WindowContent, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell } from "react95";
+import {  Button, TextField, WindowContent, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell } from "react95";
 import { useSelector, useDispatch } from 'react-redux'
 import React from 'react'
-import { useApproveNFT } from "../../interactors/useApproveNFT";
-import ERC721Abi from '../../abis/ERC721.json'
 import axios from 'axios'
-import { useAccount, useNetwork, useWaitForTransaction, useContractRead, usePrepareContractWrite, useContractWrite } from "wagmi";
+import { useAccount, useNetwork, useWaitForTransaction, useContractWrite } from "wagmi";
 import BigNumber from "bignumber.js";
 import LSSVMFactory from "../../abis/LSSVMFactory.json"
 import Web3 from "web3";
 import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
-import { useState } from "react";
 import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
+  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
+  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
 }
 const wethAddress = {
-  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
+  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+  '1': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 }
 const web3 = new Web3()
 
@@ -27,7 +26,7 @@ export function CreateOffer({ type }) {
    */
   const { chain } = useNetwork()
   const { address } = useAccount()
-  
+
   /**
    * User states
    */
@@ -40,7 +39,7 @@ export function CreateOffer({ type }) {
    */
   const [nfts, setNfts] = React.useState([])
   const nftCollectionAddress = web3.utils.isAddress(keyword) ? keyword : nfts?.[0]?.address
-  
+
   /**
    * Wagmi calls
    */
@@ -64,7 +63,7 @@ export function CreateOffer({ type }) {
     [],
     new BigNumber(stakeAmount).times(new BigNumber('1000000000000000000')).toFixed(0),
     ], wethAddress[chain?.id], false],
-    
+
   })
   const { isLoading: isCreateLoading, isSuccess: isCreateSuccess, isError: isCreateError } = useWaitForTransaction({
     hash: createPoolTxData?.hash,
@@ -118,7 +117,7 @@ export function CreateOffer({ type }) {
     <p>The first NFT being sold to this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) - Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
     <Button disabled={new BigNumber(
-      WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000')) 
+      WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000'))
       || isWETHApproveLoading
       || !stakeAmount
       || !startPrice
@@ -128,8 +127,8 @@ export function CreateOffer({ type }) {
     <Button onClick={() => {
 
         writeCreatePool?.()
-      
-      
+
+
     }} disabled={isCreateLoading || isCreateSuccess}>{isCreateLoading? 'Making Offer...': isCreateSuccess? 'Offer made': 'Make Offer'}</Button>
   </WindowContent>
 }

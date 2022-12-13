@@ -1,6 +1,4 @@
 import React from 'react';
-import Draggable from 'react-draggable';
-import BigNumber from 'bignumber.js';
 import { ThemeProvider } from 'styled-components';
 import {
   AppBar,
@@ -16,9 +14,7 @@ import {
 import original from 'react95/dist/themes/original';
 // original Windows95 font (optionally)
 import { useAccount, useConnect, useEnsName, useNetwork } from 'wagmi';
-import { createAlchemyWeb3 } from '@alch/alchemy-web3';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import ERC721 from './abis/ERC721.json';
 import { Wrapper, GlobalStyles } from './Styles';
 
 import logoIMG from './assets/noodlogo.png';
@@ -139,7 +135,7 @@ export default function Default() {
                     setIexploreWindow(!iexploreWindow);
                   }}
                 default={{
-                  x: (width / 2 - 200) + (i * 40),
+                  x: 50 + (i * 40),
                   y: 50 + (i * 40),
                   width: 1000,
                 }}

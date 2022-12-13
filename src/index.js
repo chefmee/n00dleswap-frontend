@@ -4,9 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureChains, chain } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import {jsonRpcProvider} from 'wagmi/providers/jsonRpc'
 import store from './store.js'
 import { Provider } from 'react-redux'
 
@@ -16,7 +14,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.goerli],
-  [alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_API_TOKEN }),publicProvider()],
+  [alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_API_TOKEN })],
   // [jsonRpcProvider({
   //   rpc: (chain) => ({
   //     http: `https://rpc.tenderly.co/fork/2280f484-0104-4fb8-862b-8770805671ff`,
@@ -33,7 +31,7 @@ root.render(
   <Provider store={store}><WagmiConfig client={client}><App />
   </WagmiConfig></Provider>
 
-    
+
 );
 
 // If you want to start measuring performance in your app, pass a function
