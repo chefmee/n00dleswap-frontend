@@ -1,6 +1,7 @@
 import React from "react";
 import BigNumber from "bignumber.js";
 import { ThemeProvider } from "styled-components";
+
 import {
   AppBar,
   Toolbar,
@@ -35,6 +36,9 @@ import { MyListings } from "./windows/listingmgr/MyPools";
 import { XSushiStaking } from "./windows/staking/xSushiStaking";
 import { Rnd } from "react-rnd";
 import { useWindowSize } from "@react-hook/window-size";
+import { useSwitchNetwork} from 'wagmi';
+import makeBlockie from 'ethereum-blockies-base64';
+import { WalletOptionsModal } from "./windows/WalletOptionsModal";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 export default function Default() {
@@ -42,6 +46,7 @@ export default function Default() {
   const [welcomeWindow, setWelcomeWindow] = React.useState(true);
   const [iexploreWindow, setIexploreWindow] = React.useState(false);
   const [initialized, setInitialized] = React.useState(false);
+  const [showWalletOptions, setShowWalletOptions] = React.useState(false);
 
   const [iframesrc, _setIframesrc] = React.useState("");
 
@@ -74,6 +79,7 @@ export default function Default() {
     createoffer: <CreateOffer></CreateOffer>,
     sweep: <Swap></Swap>,
     mypools: <MyListings></MyListings>,
+    walletSelector: <WalletOptionsModal></WalletOptionsModal>
   };
   const [width, height] = useWindowSize();
 
@@ -81,12 +87,18 @@ export default function Default() {
     const esheep = new window.eSheep();
     esheep.Start();
   };
+
+  const onConnectButtonClicked = () => {
+    setWindowStack({ action: "push", window: "walletSelector" })
+  };
+
   React.useEffect(() => {
     if (window.eSheep) {
       if (!initialized) {
         const esheep = new window.eSheep();
         esheep.Start();
         setWindowStack({ action: "push", window: "n00d" });
+        if (address) setWindowStack({ action: "push", window: "walletSelector" });
         setInitialized(true);
       }
     }
@@ -114,13 +126,15 @@ export default function Default() {
     _setIframesrc(x);
   }
   const { chain } = useNetwork();
-  if (chain?.id && chain?.id != 1 && chain?.id != 5)
-    alert(`Network ${chain?.id} not supported`);
+
+  const { switchNetwork } = useSwitchNetwork()
+
+  if (chain?.id && chain?.id != 1 && chain?.id != 5) {
+    switchNetwork?.(1) // switch to ethereum network
+  };
+
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
 
@@ -128,6 +142,41 @@ export default function Default() {
     setWindowStack({ action: 'focus', window: result.draggableId });
     setIexploreWindow(!iexploreWindow);
   };
+
+  const replacerFunc = () => {
+    const visited = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (visited.has(value)) {
+          return;
+        }
+        visited.add(value);
+      }
+      return value;
+    };
+  };
+
+  React.useEffect(() => {
+    const normalizedWindowPositions = {};
+    Object.entries(windowPositions).map(([key, value]) => {
+      normalizedWindowPositions[key] = {
+        x: value.x,
+        y: value.y,
+      }
+    });
+    window.localStorage.setItem('windowPositions', JSON.stringify(normalizedWindowPositions, replacerFunc()))
+  }, [windowPositions]);
+
+  React.useEffect(() => {
+    const normalizedWindowSizes = {};
+    Object.entries(windowSizes).map(([key, value]) => {
+      normalizedWindowSizes[key] = {
+        width: value.width,
+        height: value.height,
+      }
+    });
+    window.localStorage.setItem('windowSizes', JSON.stringify(normalizedWindowSizes, replacerFunc()))
+  }, [windowSizes]);
 
   return (
     <Wrapper>
@@ -229,11 +278,12 @@ export default function Default() {
                   }}
                   onClick={() => setOpen(false)}
                 >
-                  <ListItem disabled={address} onClick={connect}>
-                    <span role="img" aria-label="🔗">
+                  <ListItem disabled={address} onClick={onConnectButtonClicked}>
+                    <span role='img' aria-label='🔗'>
                       🔗
                     </span>
-                    {address ? "Connected" : "Connect Wallet"}
+                    <img src={makeBlockie(address)} style={{ width: '20px', height: '20px', marginRight: '10px', marginLeft: '10px'}}/>
+                    {address ? `Connected (${address})` : 'Connect Wallet'}
                   </ListItem>
                   {/* <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
