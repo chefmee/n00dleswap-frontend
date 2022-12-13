@@ -136,6 +136,41 @@ export default function Default() {
   const [windowPositions, setWindowPositions] = React.useState({});
   const [windowSizes, setWindowSizes] = React.useState({});
 
+  const replacerFunc = () => {
+    const visited = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (visited.has(value)) {
+          return;
+        }
+        visited.add(value);
+      }
+      return value;
+    };
+  };
+
+  React.useEffect(() => {
+    const normalizedWindowPositions = {};
+    Object.entries(windowPositions).map(([key, value]) => {
+      normalizedWindowPositions[key] = {
+        x: value.x,
+        y: value.y,
+      }
+    });
+    window.localStorage.setItem('windowPositions', JSON.stringify(normalizedWindowPositions, replacerFunc()))
+  }, [windowPositions]);
+
+  React.useEffect(() => {
+    const normalizedWindowSizes = {};
+    Object.entries(windowSizes).map(([key, value]) => {
+      normalizedWindowSizes[key] = {
+        width: value.width,
+        height: value.height,
+      }
+    });
+    window.localStorage.setItem('windowSizes', JSON.stringify(normalizedWindowSizes, replacerFunc()))
+  }, [windowSizes]);
+
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
