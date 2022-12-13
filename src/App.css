@@ -1,11 +1,15 @@
 .App {
   text-align: center;
-  background-image: url('noodlebar.png');
+  background-image: url('noodlebar.jpg');
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+body {
+
 }
 
 @media (prefers-reduced-motion: no-preference) {

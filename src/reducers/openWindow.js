@@ -20,6 +20,8 @@ export const openedWindowsSlice = createSlice({
         default:
           ref.splice(ref.indexOf(action.window), 1)
       }
+      window.localStorage.setItem('openedWindows', ref)
+      window.localStorage.setItem('windowOrder', ref)
     }
   },
 })

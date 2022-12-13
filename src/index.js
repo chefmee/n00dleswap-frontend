@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureChains, chain } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import {jsonRpcProvider} from 'wagmi/providers/jsonRpc'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import store from './store.js'
 import { Provider } from 'react-redux'
 import { WagmiConfig, createClient } from 'wagmi'
@@ -14,7 +14,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.goerli],
-  [alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_API_TOKEN }),publicProvider()],
+  [alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_API_TOKEN })],
   // [jsonRpcProvider({
   //   rpc: (chain) => ({
   //     http: `https://rpc.tenderly.co/fork/2280f484-0104-4fb8-862b-8770805671ff`,
@@ -23,6 +23,15 @@ const { chains, provider, webSocketProvider } = configureChains(
 )
 const client = createClient({
   autoConnect: true,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+  ],
   provider,
   webSocketProvider,
 })

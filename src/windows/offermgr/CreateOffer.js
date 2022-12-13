@@ -1,88 +1,210 @@
-import { Anchor, Button, TextField, WindowContent, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell } from "react95";
-import { useSelector, useDispatch } from 'react-redux'
-import React from 'react'
+import {
+  Anchor,
+  Button,
+  TextField,
+  WindowContent,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeadCell,
+  TableBody,
+  TableDataCell,
+} from "react95";
+import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
-import ERC721Abi from '../../abis/ERC721.json'
-import axios from 'axios'
-import { useAccount, useNetwork, useWaitForTransaction, useContractRead, usePrepareContractWrite, useContractWrite } from "wagmi";
+import ERC721Abi from "../../abis/ERC721.json";
+import axios from "axios";
+import {
+  useAccount,
+  useNetwork,
+  useWaitForTransaction,
+  useContractRead,
+  usePrepareContractWrite,
+  useContractWrite,
+} from "wagmi";
 import BigNumber from "bignumber.js";
-import LSSVMFactory from "../../abis/LSSVMFactory.json"
+import LSSVMFactory from "../../abis/LSSVMFactory.json";
 import Web3 from "web3";
 import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { useState } from "react";
-import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
+import {
+  setStartPrice,
+  setPriceIncrement,
+  setStakeAmount,
+  setKeyword,
+} from "../../reducers/offer";
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080'
-}
+  5: "0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080",
+};
 const wethAddress = {
-  '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6'
-}
-const web3 = new Web3()
+  5: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+};
+const web3 = new Web3();
 
 export function CreateOffer({ type }) {
   /**
    * Wagmi setup
    */
-  const { chain } = useNetwork()
-  const { address } = useAccount()
-  
+  const { chain } = useNetwork();
+  const { address } = useAccount();
+
   /**
    * User states
    */
   // TODO: Move to Redux
-  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector((state) => state.offer)
-  const dispatch = useDispatch()
+  const { startPrice, priceIncrement, keyword, stakeAmount } = useSelector(
+    (state) => state.offer
+  );
+  const [formValid, setFormValid] = React.useState(false);
+  const [startPriceValid, setStartPriceValid] = React.useState(false);
+  const [priceIncrementValid, setPriceIncrementValid] = React.useState(false);
+  const [stakeAmountValid, setStakeAmountValid] = React.useState(false);
+  const [formErrors, setFormErrors] = React.useState({
+    startPrice: "",
+    priceIncrement: "",
+    stakeAmount: "",
+  });
+  const dispatch = useDispatch();
+
+  const onFieldChanged = (type, e) => {
+    const fieldFormErrors = formErrors;
+    let fieldStartPriceValid = startPriceValid;
+    let fieldPriceIncrementValid = priceIncrementValid;
+    let fieldStakeAmountValid = stakeAmountValid;
+    switch (type) {
+      case "startPrice":
+        dispatch(setStartPrice(e.target.value));
+        fieldStartPriceValid = e.target.value > 0;
+        fieldPriceIncrementValid = e.target.value - priceIncrement > 0;
+        fieldFormErrors.startPrice = fieldStartPriceValid
+          ? ""
+          : "Start Price should be whole number";
+        fieldFormErrors.priceIncrement = fieldPriceIncrementValid
+          ? ""
+          : "Price Decrement should be less than Start Price";
+        break;
+      case "priceIncrement":
+        dispatch(setPriceIncrement(e.target.value));
+        fieldPriceIncrementValid = startPrice - e.target.value > 0;
+        fieldFormErrors.priceIncrement = fieldPriceIncrementValid
+          ? ""
+          : "Price Decrement should be less than Start Price";
+        break;
+      case "stakeAmount":
+        dispatch(setStakeAmount(e.target.value));
+        fieldStakeAmountValid = e.target.value > 0;
+        fieldFormErrors.stakeAmount = fieldStakeAmountValid
+          ? ""
+          : "Amount of Stake should be whole number";
+        break;
+      default:
+        break;
+    }
+    setStartPriceValid(fieldStartPriceValid);
+    setPriceIncrementValid(fieldPriceIncrementValid);
+    setStakeAmountValid(fieldStakeAmountValid);
+    setFormValid(
+      fieldStartPriceValid && fieldPriceIncrementValid && fieldStakeAmountValid
+    );
+    setFormErrors(fieldFormErrors);
+  };
 
   /**
    * Auto states
    */
-  const [nfts, setNfts] = React.useState([])
-  const nftCollectionAddress = web3.utils.isAddress(keyword) ? keyword : nfts?.[0]?.address
-  
+  const [nfts, setNfts] = React.useState([]);
+  const nftCollectionAddress = web3.utils.isAddress(keyword)
+    ? keyword
+    : nfts?.[0]?.address;
+
   /**
    * Wagmi calls
    */
-  const WETHAllowance = useGetTokenAllowance(wethAddress[chain?.id], factoryAddress[chain?.id])
-  const { write: writeWETHApprove, data: dataWETHApprove } = useApproveToken(wethAddress[chain?.id], factoryAddress[chain?.id], '1234567891234567891231231234589123456789')
-  const { isLoading: isWETHApproveLoading, isSuccess: isWETHApproveSuccess } = useWaitForTransaction({
-    hash: dataWETHApprove?.hash,
-  })
-  const { write: writeCreatePool, data: createPoolTxData, isError: isPrepareCreateError, error } = useContractWrite({
-    mode: 'recklesslyUnprepared',
+  const WETHAllowance = useGetTokenAllowance(
+    wethAddress[chain?.id],
+    factoryAddress[chain?.id]
+  );
+  const { write: writeWETHApprove, data: dataWETHApprove } = useApproveToken(
+    wethAddress[chain?.id],
+    factoryAddress[chain?.id],
+    "1234567891234567891231231234589123456789"
+  );
+  const { isLoading: isWETHApproveLoading, isSuccess: isWETHApproveSuccess } =
+    useWaitForTransaction({
+      hash: dataWETHApprove?.hash,
+    });
+  const {
+    write: writeCreatePool,
+    data: createPoolTxData,
+    isError: isPrepareCreateError,
+    error,
+  } = useContractWrite({
+    mode: "recklesslyUnprepared",
     overrides: {
-      value: new BigNumber(stakeAmount).times(new BigNumber('1000000000000000000')).toFixed(0),
+      value: new BigNumber(stakeAmount)
+        .times(new BigNumber("1000000000000000000"))
+        .toFixed(0),
     },
     addressOrName: factoryAddress[chain?.id],
     contractInterface: LSSVMFactory,
-    functionName: 'createPairERC20',
-    args: [[wethAddress[chain?.id], nftCollectionAddress, '0xaC6dcFF6E13132f075e36cA3a7F403236f869438', address, 0,
-    new BigNumber(priceIncrement).times(new BigNumber('1000000000000000000')).toFixed(0),
-      "0",
-    new BigNumber(startPrice).plus(new BigNumber(priceIncrement)).times(new BigNumber('1000000000000000000')).toFixed(0),
-    [],
-    new BigNumber(stakeAmount).times(new BigNumber('1000000000000000000')).toFixed(0),
-    ], wethAddress[chain?.id], false],
-    
-  })
-  const { isLoading: isCreateLoading, isSuccess: isCreateSuccess, isError: isCreateError } = useWaitForTransaction({
+    functionName: "createPairERC20",
+    args: [
+      [
+        wethAddress[chain?.id],
+        nftCollectionAddress,
+        "0xaC6dcFF6E13132f075e36cA3a7F403236f869438",
+        address,
+        0,
+        new BigNumber(priceIncrement)
+          .times(new BigNumber("1000000000000000000"))
+          .toFixed(0),
+        "0",
+        new BigNumber(startPrice)
+          .plus(new BigNumber(priceIncrement))
+          .times(new BigNumber("1000000000000000000"))
+          .toFixed(0),
+        [],
+        new BigNumber(stakeAmount)
+          .times(new BigNumber("1000000000000000000"))
+          .toFixed(0),
+      ],
+      wethAddress[chain?.id],
+      false,
+    ],
+  });
+  const {
+    isLoading: isCreateLoading,
+    isSuccess: isCreateSuccess,
+    isError: isCreateError,
+  } = useWaitForTransaction({
+
     hash: createPoolTxData?.hash,
-  })
+  });
 
   /**
    * Effects
    */
   React.useEffect(() => {
-    if (isPrepareCreateError && !error.message.includes('user rejected transaction')) alert('Create pool error. Is the address you entered a NFT cotract address?')
-  }, [isPrepareCreateError])
+    if (
+      isPrepareCreateError &&
+      !error.message.includes("user rejected transaction")
+    )
+      alert(
+        "Create pool error. Is the address you entered a NFT cotract address?"
+      );
+  }, [isPrepareCreateError]);
   React.useEffect(() => {
     async function get() {
-      const res = await axios.get(`https://core-service-ipnp6ty54a-uc.a.run.app/collections/search?ethereum=${chain?.id}&query=${keyword}`)
-      setNfts(res.data)
+      const res = await axios.get(
+        `https://core-service-ipnp6ty54a-uc.a.run.app/collections/search?ethereum=${chain?.id}&query=${keyword}`
+      );
+      setNfts(res.data);
     }
-    if (keyword !== '') get()
-  }, [keyword])
+    if (keyword !== "") get();
+  }, [keyword]);
 
   return <div className="window-content">
     {nfts.length !== 1 ? <>Filter: <input className="input" placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></input></> :
