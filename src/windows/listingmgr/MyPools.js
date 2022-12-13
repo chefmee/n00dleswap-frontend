@@ -12,9 +12,7 @@ import LSSVMSwap from '../../abis/LSSVMSwap.json'
 import { hexZeroPad } from "ethers/lib/utils";
 import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { setSelectedRow } from "../../reducers/pool";
-import { usePrompt } from "../../hooks/usePrompt";
-import { setModalStatus } from "../../reducers/modal";
-import { ModalTypes } from "../../constants/modalTypes";
+
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
@@ -40,7 +38,7 @@ export function MyListings() {
   /**
    * Redux
    */
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectedNFTs = useSelector((state) => state.selectNFT);
   const dispatch = useDispatch();
 
   /**
@@ -68,7 +66,6 @@ export function MyListings() {
   const [poolsTxCount, setPoolsTxCount] = React.useState({})
   const [isModifyingNFTOfPool, setIsModityingNFTOfPool] = React.useState(0)
   const [myNFTs, setMyNFTs] = React.useState([])
-  const { promptDialog } = usePrompt();
 
   /**
    * Wagmi calls
@@ -275,16 +272,6 @@ export function MyListings() {
     else setMyNFTs([])
   }, [isModifyingNFTOfPool, selectedRow])
 
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
-
-
   /**
    * Dependent auto states
    */
@@ -333,14 +320,14 @@ export function MyListings() {
     <br></br>
     {selectedRow?.collection ? <Fieldset label="Actions">
       <Button onClick={
-        async () => {
-          const spotPrice = await promptDialog('Input new spot price (in ETH)');
+        () => {
+          const spotPrice = prompt('Input new spot price (in ETH)')
           setNewSpotPrice(spotPrice)
         }
       }>Change Spot Price</Button>
       <Button onClick={
-        async () => {
-          const delta = await promptDialog('Input new delta (in ETH)');
+        () => {
+          const delta = prompt('Input new delta (in ETH)')
           setNewDelta(delta)
         }
       }>Change Delta</Button>
@@ -392,8 +379,8 @@ export function MyListings() {
       </div> : <></>}
       {selectedRow?.ethExposure !== undefined ? <>
         <Button onClick={
-          async () => {
-            const withd = await promptDialog('Input withdrawal amount (in ETH)')
+          () => {
+            const withd = prompt('Input withdrawal amount (in ETH)')
             setWithdrawalAmount(withd)
           }
         }>Withdraw ETH</Button>

@@ -1,6 +1,5 @@
-
-import React from "react";
-import { ThemeProvider } from "styled-components";
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import {
   AppBar,
@@ -11,12 +10,10 @@ import {
   Divider,
   Window,
   WindowHeader,
-  WindowContent,
-} from "react95";
+} from 'react95';
 // pick a theme of your choice
 import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
-
 import {useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
 
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -42,25 +39,6 @@ import {
 import { WalletOptionsModal } from "./windows/WalletOptionsModal";
 
 
-import logoIMG from "./assets/noodlogo.png";
-import InfoWindow from "./windows/Info";
-import IexploreWindow from "./windows/Iexplore";
-import StakeWindow from "./windows/staking/Stake";
-import { MyNFTsSelector } from "./windows/listingmgr/MyNFTsSelector";
-import { useDispatch, useSelector } from "react-redux";
-import { open as openWindow } from "./reducers/openWindow";
-import { CreatePool } from "./windows/listingmgr/CreatePool";
-import { ImagePreview } from "./windows/utils/ImagePreview";
-import { CreateOffer } from "./windows/offermgr/CreateOffer";
-import { Swap } from "./windows/marketplace/Swap";
-import { MyListings } from "./windows/listingmgr/MyPools";
-import { XSushiStaking } from "./windows/staking/xSushiStaking";
-import { Rnd } from "react-rnd";
-import { useWindowSize } from "@react-hook/window-size";
-import { Modal } from "./windows/Modal";
-import { setModalStatus } from "./reducers/modal";
-import { ModalTypes } from "./constants/modalTypes";
-
 export default function Default() {
   const [open, setOpen] = React.useState(false);
   const [welcomeWindow, setWelcomeWindow] = React.useState(true);
@@ -74,7 +52,6 @@ export default function Default() {
     false || process.env.NODE_ENV === "development"
   );
   const windowStack = useSelector((state) => state.openWindow);
-  const { message } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const setWindowStack = (a) => dispatch(openWindow(a));
   const windows = {
@@ -119,9 +96,7 @@ export default function Default() {
         const esheep = new window.eSheep();
         esheep.Start();
         setWindowStack({ action: "push", window: "n00d" });
-
         if (address) setWindowStack({ action: "push", window: "walletSelector" });
-
         setInitialized(true);
       }
     }
@@ -150,17 +125,12 @@ export default function Default() {
   }
   const { chain } = useNetwork();
 
-
   const { switchNetwork } = useSwitchNetwork()
 
   if (chain?.id && chain?.id != 1 && chain?.id != 5) {
-  dispatch(setModalStatus({
-      type: ModalTypes.ERROR,
-      message: `Network ${chain?.id} not supported`
-    }))
     switchNetwork?.(1) // switch to ethereum network
-    
   };
+
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const [windowPositions, setWindowPositions] = React.useState({});
@@ -170,7 +140,6 @@ export default function Default() {
     <Wrapper>
       <GlobalStyles></GlobalStyles>
       <ThemeProvider theme={original}>
-
         {
           windowStack.map((window, i) => {
             return (
@@ -212,80 +181,63 @@ export default function Default() {
                   topRight: false
                 }}
                 maxWidth={'100vw'}
-                maxHeight={'70vh'}
               >
-                <WindowHeader
-                  active={i === windowStack.length - 1}
-                  className="window-header"
-                >
-                  <span>{window}.exe</span>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                      gap: "0.25rem",
-                    }}
-                  >
-                    {/* <Button onClick={(event) => {
+                <Window  style={{ width: '100%', height: '100%' }} className="window">
+
+                  <WindowHeader active={i === windowStack.length - 1} className='window-header'>
+                    <span>{window}.exe</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '0.25rem' }}>
+                      {/* <Button onClick={(event) => {
                         setWindowStack({ action: 'max', window: win });
                       }}>
                       </Button> */}
-                    <Button
-                      onClick={(event) => {
-                        setWindowStack({ action: "del", window: window });
+                      <Button onClick={(event) => {
+                        setWindowStack({ action: 'del', window: window });
                         setWelcomeWindow(!welcomeWindow);
                         event.stopPropagation();
-                      }}
-                    >
-                      <span className="close-icon" />
-                    </Button>
-                  </div>
-                </WindowHeader>
-                <div
-                  style={{
-                    overflowY: "scroll",
-                    overflowX: "hidden",
-                    height: "calc(100% - 2.5em)",
-                  }}
-                >
-                  {windows[window]}
-                </div>
-              </Window>
-            </Rnd>
-          );
-        })}
-        {message.length > 0 && <Modal />}
+                      }}>
+                        <span className='close-icon' />
+                      </Button>
+                    </div>
+                  </WindowHeader><div style={{overflowY: 'scroll', overflowX: 'hidden', height: 'calc(100% - 2.5em)'}}>{windows[window]}</div>
+                </Window>
+              </Rnd>
+            );
+          }
+
+
+          )
+        }
 
         <AppBar>
-          <Toolbar style={{ justifyContent: "space-between" }}>
-            <div style={{ position: "relative", display: "inline-block" }}>
+          <Toolbar style={{ justifyContent: 'space-between' }}>
+            <div style={{ position: 'relative', display: 'inline-block' }}>
               <Button
                 onClick={() => setOpen(!open)}
                 active={open}
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: 'bold' }}
               >
                 <img
                   src={logoIMG}
-                  alt="react95 logo"
-                  style={{ height: "20px", marginRight: 4 }}
+                  alt='react95 logo'
+                  style={{ height: '20px', marginRight: 4 }}
                 />
                 Start
               </Button>
               {open && (
                 <List
                   style={{
-                    position: "absolute",
-                    left: "0",
-                    top: "100%",
+                    position: 'absolute',
+                    left: '0',
+                    top: '100%',
                   }}
                   onClick={() => setOpen(false)}
                 >
                   <ListItem disabled={address} onClick={onConnectButtonClicked}>
                     <span role='img' aria-label='🔗'>
-
                       🔗
                     </span>
-                    {address ? "Connected" : "Connect Wallet"}
+                    {address ? 'Connected' : 'Connect Wallet'}
                   </ListItem>
                   {/* <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>

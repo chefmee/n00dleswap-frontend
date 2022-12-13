@@ -15,8 +15,6 @@ import { useApproveNFT } from "../../interactors/useApproveNFT";
 import { useDispatch, useSelector } from "react-redux";
 import { select, unselectAll } from "../../reducers/selectNFTSwap";
 import { setKeyword, setAmount, setIsPurchase } from "../../reducers/swap";
-import { setModalStatus } from "../../reducers/modal";
-import { ModalTypes } from "../../constants/modalTypes";
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
@@ -53,7 +51,7 @@ export function Swap() {
    * Redux
    */
   const dispatch = useDispatch()
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFTSwap)
+  const selectedNFTs = useSelector((state) => state.selectNFTSwap)
 
   /**
    * User states
@@ -204,12 +202,7 @@ export function Swap() {
       setOffers(sortedOffers)
     }
     x()
-    if (isBuyNFTSuccess || isSellNFTSuccess) {
-      dispatch(setModalStatus({
-        type: ModalTypes.SUCCESS,
-        message: 'Trade Success!'
-      }))
-    }
+    if (isBuyNFTSuccess || isSellNFTSuccess) alert('Trade Success!')
   }, [address, chain, nfts, keyword, isPurchase, isBuyNFTSuccess, isSellNFTSuccess])
   // Get collections from gem.xyz by keyword
   React.useEffect(() => {
@@ -220,16 +213,6 @@ export function Swap() {
     }
     if (keyword !== '' && !web3.utils.isAddress(keyword)) get()
   }, [keyword])
-
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
-
   // Get user's NFTs
   React.useEffect(() => {
     async function get() {
