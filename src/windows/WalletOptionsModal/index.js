@@ -27,7 +27,7 @@ export function WalletOptionsModal() {
       </List>
         <br></br>
       {error && <p>{error.message}</p>}
-        {address && <p>Connected as {address}. Please disconnect from your wallet app.</p>}
+        {address && <><p>Connected as {address}. </p><p>Please disconnect from your wallet app if needed.</p></>}
     </WindowContent>
   );
 }

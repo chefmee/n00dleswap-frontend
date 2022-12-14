@@ -40,7 +40,7 @@ export function MyListings() {
   /**
    * Redux
    */
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const { selectNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
   const dispatch = useDispatch();
 
   /**
@@ -60,8 +60,8 @@ export function MyListings() {
    */
   const [pools, setPools] = React.useState([])
   const contract = new web3.eth.Contract(LSSVMFactory, factoryAddress[chain?.id])
-  const isInSelectedNFTs = (n) =>
-    selectedNFTs.indexOf(
+  const isInselectNFTs = (n) =>
+    selectNFTs.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
   const [fauxselectedRow, setFauxSelectedRow] = React.useState({})
@@ -178,7 +178,7 @@ export function MyListings() {
     addressOrName: selectedRow?.poolAddress,
     contractInterface: LSSVMSwap,
     functionName: isModifyingNFTOfPool === 1 ? 'addNFTToPool' : isModifyingNFTOfPool === 2 ? 'removeNFTFromPool' : '',
-    args: [selectedNFTs.map(sn => sn.split("|*|")[1])],
+    args: [selectNFTs.map(sn => sn.split("|*|")[1])],
   })
   const { write: writeAddRemove } = useContractWrite(addremoveConfig)
 
@@ -351,7 +351,7 @@ export function MyListings() {
         <br></br>
         <p>NFTs Listed for Trade: {NFTIdsListed?.map(e => `#${e}, `)}</p>
       </> : <></>}
-      {isModifyingNFTOfPool === 1 ? <Button onClick={writeAddRemove}>Add {selectedNFTs.length} NFT(s) to Pool</Button> : isModifyingNFTOfPool === 2 ? <Button onClick={writeAddRemove}>Remove {selectedNFTs.length} NFT(s) from Pool</Button> : <></>}
+      {isModifyingNFTOfPool === 1 ? <Button onClick={writeAddRemove}>Add {selectNFTs.length} NFT(s) to Pool</Button> : isModifyingNFTOfPool === 2 ? <Button onClick={writeAddRemove}>Remove {selectNFTs.length} NFT(s) from Pool</Button> : <></>}
       {isModifyingNFTOfPool > 0 ? <div style={{
         display: "flex",
         flexDirection: "row",
@@ -363,7 +363,7 @@ export function MyListings() {
           return (
             <Panel
               onClick={() => dispatch(select(n))}
-              variant={!isInSelectedNFTs(n) ? "inside" : "well"}
+              variant={!isInselectNFTs(n) ? "inside" : "well"}
               key={n.address + "|*|" + n.id}
               style={{
                 marginTop: "1rem",

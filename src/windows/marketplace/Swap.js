@@ -53,7 +53,7 @@ export function Swap() {
    * Redux
    */
   const dispatch = useDispatch()
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFTSwap)
+  const { selectNFTs, isSameCollection } = useSelector((state) => state.selectNFTSwap)
 
   /**
    * User states
@@ -66,11 +66,11 @@ export function Swap() {
    */
   const [offers, setOffers] = React.useState()
   const [nfts, setNfts] = React.useState([])
-  const isInSelectedNFTs = (n) => selectedNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1
+  const isInselectNFTs = (n) => selectNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1
   const [myNFTs, setMyNFTs] = React.useState([])
   const nftCollectionAddress = web3.utils.isAddress(keyword) ? keyword : nfts?.[0]?.address
-  const total = offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).reduce((p, c) => p.plus(c.spot), new BigNumber(0))
-  const offersPerPool = offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).reduce((p, o) => {
+  const total = offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).reduce((p, c) => p.plus(c.spot), new BigNumber(0))
+  const offersPerPool = offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).reduce((p, o) => {
     if (p[o.poolAddress]) p[o.poolAddress].push(o.id)
     else p[o.poolAddress] = [o.id]
     return p
@@ -116,7 +116,7 @@ export function Swap() {
     contractInterface: LSSVMRouter,
     functionName: 'swapNFTsForToken',
     args:
-    [ selectedNFTs?.map((sn, i) => [offers?.[i].poolAddress, sn?.split('|*|')[1]]).reduce((payload, offer) => {
+    [ selectNFTs?.map((sn, i) => [offers?.[i].poolAddress, sn?.split('|*|')[1]]).reduce((payload, offer) => {
       const poolBucketInd = payload.findIndex(p => {
         return p?.[0] == offer?.[0]
       })
@@ -282,7 +282,7 @@ export function Swap() {
       </Table>
     }
 
-    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectedNFTs.length}</p>
+    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectNFTs.length}</p>
     <p>You {isPurchase ? 'pay' : 'get'}: {new BigNumber(total)?.dividedBy('1000000000000000000').toString()} ETH</p>
     {
       amount > 0 && isPurchase ? <>
@@ -291,7 +291,7 @@ export function Swap() {
           writeBuyNFT?.()
         }}>{isBuyNFTLoading? 'Buying...': 'Buy'}</Button>
         <p>Summary:</p>
-        <p>{offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).length} NFTs available for purchase</p>
+        <p>{offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).length} NFTs available for purchase</p>
         {Object.keys(offersPerPool || {}).map(o =>
           <div key={o}>
             <p>[Pool {o}]</p>
@@ -314,7 +314,7 @@ export function Swap() {
       }}>{myNFTs.length > 0 ? myNFTs.map(n => {
         return <Panel
           onClick={() => dispatch(select(n))}
-          variant={!isInSelectedNFTs(n) ? 'inside' : 'well'}
+          variant={!isInselectNFTs(n) ? 'inside' : 'well'}
           key={n.address + '|*|' + n.id}
           style={{
             marginTop: '1rem',

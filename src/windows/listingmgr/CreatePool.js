@@ -36,22 +36,22 @@ export function CreatePool({ type }) {
    * Redux
    */
   const dispatch = useDispatch()
-  const { selectedNFTs } = useSelector((state) => state.selectNFT)
+  const { selectNFTs } = useSelector((state) => state.selectNFT)
   /**
-   * User states 
+   * User states
    */
   // TODO: Move to Redux
   const { isSudoMirror, startPrice, priceIncrement } = useSelector((state) => state.pool)
-  
+
   /**
    * Wagmi Calls
    */
-  const { write, data: approveData } = useApproveNFT(selectedNFTs[0]?.split('|*|')[0], factoryAddress[chain?.id], true)
+  const { write, data: approveData } = useApproveNFT(selectNFTs[0]?.split('|*|')[0], factoryAddress[chain?.id], true)
   const { isLoading: isApproveLoading, isSuccess: isApproveSuccess } = useWaitForTransaction({
     hash: approveData?.hash,
   })
   const { data: NFTAllowance } = useContractRead({
-    addressOrName: selectedNFTs[0]?.split('|*|')[0],
+    addressOrName: selectNFTs[0]?.split('|*|')[0],
     contractInterface: erc721ABI,
     functionName: 'isApprovedForAll',
     args: [address, factoryAddress[chain?.id]],
@@ -62,11 +62,11 @@ export function CreatePool({ type }) {
     addressOrName: factoryAddress[chain?.id],
     contractInterface: LSSVMFactory,
     functionName: 'createPairERC20',
-    args: [[wethAddress[chain?.id], selectedNFTs[0]?.split('|*|')[0], linearBondingAddress[chain?.id], address, 1,
+    args: [[wethAddress[chain?.id], selectNFTs[0]?.split('|*|')[0], linearBondingAddress[chain?.id], address, 1,
     new BigNumber(priceIncrement).times(new BigNumber('1000000000000000000')).toFixed(0),
       "0",
     new BigNumber(startPrice).minus(new BigNumber(priceIncrement)).times(new BigNumber('1000000000000000000')).toFixed(0),
-    selectedNFTs.map(sn => sn?.split('|*|')[1]),
+    selectNFTs.map(sn => sn?.split('|*|')[1]),
       "0",
     ], wethAddress[chain?.id], isSudoMirror],
   })
@@ -80,9 +80,9 @@ export function CreatePool({ type }) {
   React.useEffect(() => {
     if (isSuccess) dispatch(unselectAll())
   }, [isSuccess])
-  
+
   return <WindowContent>
-    <div>You are listing {selectedNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectedNFTs[0]?.split('|*|')[0]}>{selectedNFTs[0]?.split('|*|')[0]}</Anchor></div>
+    <div>You are listing {selectNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectNFTs[0]?.split('|*|')[0]}>{selectNFTs[0]?.split('|*|')[0]}</Anchor></div>
     <Table>
       <TableHead>
         <TableRow head>
@@ -92,7 +92,7 @@ export function CreatePool({ type }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {selectedNFTs.map(sn => <TableRow key={sn} onClick={
+        {selectNFTs.map(sn => <TableRow key={sn} onClick={
           () => {
             //preview image
             dispatch(view(sn?.split('|*|')[2] || 'https://notjustalabel-prod.s3-accelerate.amazonaws.com/s3fs-public/images/designers/209585/avatar/content_not_found_notjustalabel_127658440.jpg'))
@@ -111,7 +111,7 @@ export function CreatePool({ type }) {
     </Table>
     <br></br>
     <Fieldset label='Listing mode'>
-      <Tooltip text='‍Allows you to list in Opensea, X2Y2, etc. at the same time' enterDelay={59} leaveDelay={500}>
+      <Tooltip text='Allows you to list in Opensea, X2Y2, etc. at the same time' enterDelay={59} leaveDelay={500}>
         <Radio
           checked={!isSudoMirror}
           onClick={(e) => dispatch(setIsSudoMirror(false))}
@@ -120,8 +120,9 @@ export function CreatePool({ type }) {
           name='lmode' />
       </Tooltip>
       &nbsp;
-      <Tooltip text='‍Dual listing in sudoswap. sudoswap will lockup your NFT.' enterDelay={59} leaveDelay={500}>
+      <Tooltip text='Dual listing in sudoswap. sudoswap will lockup your NFT.' enterDelay={59} leaveDelay={500}>
         <Radio
+            disabled={true}
           checked={isSudoMirror}
           onClick={(e) => dispatch(setIsSudoMirror(true))}
           value={false}
