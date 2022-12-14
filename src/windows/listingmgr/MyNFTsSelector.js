@@ -25,9 +25,9 @@ export function MyNFTsSelector() {
    * States
    */
   const [loadBar, setLoadBar] = React.useState(true);
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectedNFTs = useSelector((state) => state.selectNFT);
   const isInSelectedNFTs = (n) =>
-    selectedNFTs.indexOf(
+    selectedNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
     
@@ -48,15 +48,6 @@ export function MyNFTsSelector() {
     get();
   }, [address]);
 
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
-  
   return (
     <WindowContent>
       {/* load bar started out as flase so make Loading... as default, then if nft length is 0, show no nft, if nft length is bigger than 0, show the nfts */}

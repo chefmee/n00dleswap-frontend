@@ -40,7 +40,7 @@ export function MyListings() {
   /**
    * Redux
    */
-  const { selectedNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectedNFTs = useSelector((state) => state.selectNFT);
   const dispatch = useDispatch();
 
   /**
@@ -274,16 +274,6 @@ export function MyListings() {
     else if (isModifyingNFTOfPool == 2 && tokenURIs?.[0]) y()
     else setMyNFTs([])
   }, [isModifyingNFTOfPool, selectedRow])
-
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
-
 
   /**
    * Dependent auto states
