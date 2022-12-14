@@ -20,17 +20,17 @@ export function MyNFTsSelector() {
   const [nfts, setNfts] = React.useState([]);
   const dispatch = useDispatch();
   const setWindowStack = (a) => dispatch(openWindow(a));
-  
+
   /**
    * States
    */
   const [loadBar, setLoadBar] = React.useState(true);
-  const selectedNFTs = useSelector((state) => state.selectNFT);
+  const selectNFTs = useSelector((state) => state.selectNFT);
   const isInSelectedNFTs = (n) =>
-    selectedNFTs?.indexOf(
+    selectNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
-    
+
   /**
    * Effects
    */
@@ -79,14 +79,14 @@ export function MyNFTsSelector() {
         <>
           <p style={{ padding: "0.5rem" }}>
             Select your NFTs to list them for sale &nbsp;{" "}
-            {selectedNFTs?.length ? (
+            {selectNFTs?.length ? (
               <>
                 <Button
                   onClick={() =>
                     setWindowStack({ action: "push", window: "createpool" })
                   }
                 >
-                  List {selectedNFTs?.length} NFTs
+                  List {selectNFTs?.length} NFTs
                 </Button>
                 <Button
                   onClick={() => {
@@ -113,7 +113,7 @@ export function MyNFTsSelector() {
               return (
                 <Panel
                   onClick={() => dispatch(select(n))}
-                  variant={!isInSelectedNFTs(n) ? "inside" : "well"}
+                  variant={!isInselectNFTs(n) ? "inside" : "well"}
                   key={n.address + "|*|" + n.id}
                   style={{
                     marginTop: "1rem",
@@ -150,7 +150,7 @@ export function MyNFTsSelector() {
               width: "100%",
             }}
           >
-            NFTs selected: {selectedNFTs?.length}
+            NFTs selected: {selectNFTs?.length}
           </Panel>
         </>
       )}

@@ -21,12 +21,12 @@ import { ModalTypes } from "../../constants/modalTypes";
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
-  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
+  '5': '0x875CC787648E5aaC2b1f01F104b064a8b3e6095B',
+  '1': '0x5389D491cC274205B873E37F09d1e21FAffbF270'
 }
 const routerAddress = {
-  '5': '0xaa71eB729daE61883E590DB9F365E3f8Ec11c7bC',
-  '1': '0x39E923b15cEAa2c001B75ab3A29F28E7774aFff5'
+  '5': '0x67595408991b530F974Bc2B69375a36fc1Cbc487',
+  '1': '0xC95fFbf97663915e290B5b34465632396B64cd7F'
 }
 
 const alchemyAddress = {
@@ -53,24 +53,24 @@ export function Swap() {
    * Redux
    */
   const dispatch = useDispatch()
-  const selectedNFTs = useSelector((state) => state.selectNFTSwap)
+  const selectNFTs = useSelector((state) => state.selectNFTSwap)
 
   /**
    * User states
    */
   // TODO: Move to Redux
   const { keyword, isPurchase, amount } = useSelector((state) => state.swap)
-  
+
   /**
    * Auto states
    */
   const [offers, setOffers] = React.useState()
   const [nfts, setNfts] = React.useState([])
-  const isInSelectedNFTs = (n) => selectedNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1 
+  const isInselectNFTs = (n) => selectNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1
   const [myNFTs, setMyNFTs] = React.useState([])
   const nftCollectionAddress = web3.utils.isAddress(keyword) ? keyword : nfts?.[0]?.address
-  const total = offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).reduce((p, c) => p.plus(c.spot), new BigNumber(0))
-  const offersPerPool = offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).reduce((p, o) => {
+  const total = offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).reduce((p, c) => p.plus(c.spot), new BigNumber(0))
+  const offersPerPool = offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).reduce((p, o) => {
     if (p[o.poolAddress]) p[o.poolAddress].push(o.id)
     else p[o.poolAddress] = [o.id]
     return p
@@ -115,8 +115,8 @@ export function Swap() {
     addressOrName: routerAddress[chain?.id],
     contractInterface: LSSVMRouter,
     functionName: 'swapNFTsForToken',
-    args: 
-    [ selectedNFTs?.map((sn, i) => [offers?.[i].poolAddress, sn?.split('|*|')[1]]).reduce((payload, offer) => {
+    args:
+    [ selectNFTs?.map((sn, i) => [offers?.[i].poolAddress, sn?.split('|*|')[1]]).reduce((payload, offer) => {
       const poolBucketInd = payload.findIndex(p => {
         return p?.[0] == offer?.[0]
       })
@@ -130,7 +130,7 @@ export function Swap() {
 
   /**
    * Effects
-   */  
+   */
   // Logic to get Real-time offers
   React.useEffect(() => {
     if (!web3.utils.isAddress(keyword) && nfts?.length !== 1) return
@@ -182,7 +182,7 @@ export function Swap() {
             delta = await sContract.methods.delta().call()
             spot = await sContract.methods.spotPrice().call()
           }
-          
+
           return { ...x, delta, spot, heldIds }
         }
       )
@@ -273,7 +273,7 @@ export function Swap() {
       </Table>
     }
 
-    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectedNFTs.length}</p>
+    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectNFTs.length}</p>
     <p>You {isPurchase ? 'pay' : 'get'}: {new BigNumber(total)?.dividedBy('1000000000000000000').toString()} ETH</p>
     {
       amount > 0 && isPurchase ? <>
@@ -282,7 +282,7 @@ export function Swap() {
           writeBuyNFT?.()
         }}>{isBuyNFTLoading? 'Buying...': 'Buy'}</Button>
         <p>Summary:</p>
-        <p>{offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).length} NFTs available for purchase</p>
+        <p>{offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).length} NFTs available for purchase</p>
         {Object.keys(offersPerPool || {}).map(o =>
           <div key={o}>
             <p>[Pool {o}]</p>
@@ -305,7 +305,7 @@ export function Swap() {
       }}>{myNFTs.length > 0 ? myNFTs.map(n => {
         return <Panel
           onClick={() => dispatch(select(n))}
-          variant={!isInSelectedNFTs(n) ? 'inside' : 'well'}
+          variant={!isInselectNFTs(n) ? 'inside' : 'well'}
           key={n.address + '|*|' + n.id}
           style={{
             marginTop: '1rem',
@@ -326,7 +326,7 @@ export function Swap() {
           }}>{n.name}</p>
 
         </Panel>
-        
+
       }) : <>
         <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Loading...</p>
         <LoadingIndicator isLoading />

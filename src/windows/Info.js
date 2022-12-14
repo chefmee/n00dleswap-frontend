@@ -13,7 +13,7 @@ export default function InfoWindow({ setWelcomeWindow, setIframesrc, isEligible 
       <br></br><p>
         Press "Start" to see all available functions.
       </p>
-      
+
       <Button onClick={
         () => {
           const noodles = [
@@ -68,11 +68,6 @@ export default function InfoWindow({ setWelcomeWindow, setIframesrc, isEligible 
       <p>Twitter: <u color='blue' onClick={() => setIframesrc("data:text/html;charset=utf-8,%3Ca%20class%3D%22twitter-timeline%22%20href%3D%22https%3A//twitter.com/n00dleSwap%3Fref_src%3Dtwsrc%255Etfw%22%3ETweets%20by%20n00dleSwap%3C/a%3E%0A%3Cscript%20async%20src%3D%22https%3A//platform.twitter.com/widgets.js%22%20charset%3D%22utf-8%22%3E%3C/script%3E%0A")}>https://twitter.com/n00dleSwap</u></p>
       <p>Telegram: <u color='blue' onClick={() => window.open('https://t.me/noodleswap')}>https://t.me/noodleswap</u></p>
       <br></br>
-      <img
-        src={logoIMG}
-        style={{ maxWidth: 200 }}
-        alt='react95 logo'
-      />
     </WindowContent>
   )
 }
