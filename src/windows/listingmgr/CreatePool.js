@@ -12,8 +12,8 @@ import { open } from "../../reducers/openWindow";
 import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/pool";
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
-  '1': '0x7dDf15839bE5B354d3A4D41E6c0Ec53E25eb6efd'
+  '5': '0x875CC787648E5aaC2b1f01F104b064a8b3e6095B',
+  '1': '0x5389D491cC274205B873E37F09d1e21FAffbF270'
 }
 const wethAddress = {
   '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
@@ -122,7 +122,6 @@ export function CreatePool({ type }) {
       &nbsp;
       <Tooltip text='Dual listing in sudoswap. sudoswap will lockup your NFT.' enterDelay={59} leaveDelay={500}>
         <Radio
-            disabled={true}
           checked={isSudoMirror}
           onClick={(e) => dispatch(setIsSudoMirror(true))}
           value={false}

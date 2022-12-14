@@ -21,12 +21,12 @@ import { ModalTypes } from "../../constants/modalTypes";
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const factoryAddress = {
-  '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
-  '1': '0x7dDf15839bE5B354d3A4D41E6c0Ec53E25eb6efd'
+  '5': '0x875CC787648E5aaC2b1f01F104b064a8b3e6095B',
+  '1': '0x5389D491cC274205B873E37F09d1e21FAffbF270'
 }
 const routerAddress = {
-  '5': '0xaa71eB729daE61883E590DB9F365E3f8Ec11c7bC',
-  '1': '0x98782f0C48f3B191c2a238216eCf7aA36BEe51d3'
+  '5': '0x67595408991b530F974Bc2B69375a36fc1Cbc487',
+  '1': '0xC95fFbf97663915e290B5b34465632396B64cd7F'
 }
 
 const alchemyAddress = {
