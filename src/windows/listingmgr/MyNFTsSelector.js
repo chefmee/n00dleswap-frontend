@@ -26,7 +26,7 @@ export function MyNFTsSelector() {
    */
   const [loadBar, setLoadBar] = React.useState(true);
   const selectNFTs = useSelector((state) => state.selectNFT);
-  const isInSelectedNFTs = (n) =>
+  const isInselectNFTs = (n) =>
     selectNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
