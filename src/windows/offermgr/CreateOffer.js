@@ -14,7 +14,7 @@ import { usePrompt } from "../../hooks/usePrompt";
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
-  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
+  '1': '0x7dDf15839bE5B354d3A4D41E6c0Ec53E25eb6efd'
 }
 const wethAddress = {
   '5': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',

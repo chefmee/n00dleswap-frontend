@@ -273,14 +273,14 @@ export default function Default() {
                     </span>
                     {address ? "Connected" : "Connect Wallet"}
                   </ListItem>
-                  {/* <Divider></Divider>
+                  <Divider></Divider>
                   <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
                     <span role='img' aria-label='👨‍🍳' >
                       👨‍🍳
                     </span>
                     &nbsp;Prepare Meal (Earn fees)
                   </ListItem>
-                  <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
+                  {/* <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
                     <span role='img' aria-label='🍴' >
                       🍴
                     </span>

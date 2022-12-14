@@ -22,11 +22,11 @@ const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 
 const factoryAddress = {
   '5': '0x9DdBea8C5a1fBbaFB06d7CFF1d17a6A3FdFc5080',
-  '1': '0x142abF0BDb409cb047c79229e3aD749371E82f87'
+  '1': '0x7dDf15839bE5B354d3A4D41E6c0Ec53E25eb6efd'
 }
 const routerAddress = {
   '5': '0xaa71eB729daE61883E590DB9F365E3f8Ec11c7bC',
-  '1': '0x39E923b15cEAa2c001B75ab3A29F28E7774aFff5'
+  '1': '0x98782f0C48f3B191c2a238216eCf7aA36BEe51d3'
 }
 
 const alchemyAddress = {
@@ -60,13 +60,13 @@ export function Swap() {
    */
   // TODO: Move to Redux
   const { keyword, isPurchase, amount } = useSelector((state) => state.swap)
-  
+
   /**
    * Auto states
    */
   const [offers, setOffers] = React.useState()
   const [nfts, setNfts] = React.useState([])
-  const isInSelectedNFTs = (n) => selectedNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1 
+  const isInSelectedNFTs = (n) => selectedNFTs.indexOf(n.address + '|*|' + n.id + '|*|' + n.imageUrl + '|*|' + n.name) !== -1
   const [myNFTs, setMyNFTs] = React.useState([])
   const nftCollectionAddress = web3.utils.isAddress(keyword) ? keyword : nfts?.[0]?.address
   const total = offers?.slice(0, !isPurchase ? selectedNFTs?.length : amount).reduce((p, c) => p.plus(c.spot), new BigNumber(0))
@@ -115,7 +115,7 @@ export function Swap() {
     addressOrName: routerAddress[chain?.id],
     contractInterface: LSSVMRouter,
     functionName: 'swapNFTsForToken',
-    args: 
+    args:
     [ selectedNFTs?.map((sn, i) => [offers?.[i].poolAddress, sn?.split('|*|')[1]]).reduce((payload, offer) => {
       const poolBucketInd = payload.findIndex(p => {
         return p?.[0] == offer?.[0]
@@ -130,7 +130,7 @@ export function Swap() {
 
   /**
    * Effects
-   */  
+   */
   // Logic to get Real-time offers
   React.useEffect(() => {
     if (!web3.utils.isAddress(keyword) && nfts?.length !== 1) return
@@ -182,7 +182,7 @@ export function Swap() {
             delta = await sContract.methods.delta().call()
             spot = await sContract.methods.spotPrice().call()
           }
-          
+
           return { ...x, delta, spot, heldIds }
         }
       )
@@ -335,7 +335,7 @@ export function Swap() {
           }}>{n.name}</p>
 
         </Panel>
-        
+
       }) : <>
         <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Loading...</p>
         <LoadingIndicator isLoading />
