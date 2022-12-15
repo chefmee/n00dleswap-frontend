@@ -25,9 +25,9 @@ export function MyNFTsSelector() {
    * States
    */
   const [loadBar, setLoadBar] = React.useState(true);
-  const { selectNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectNFTs = useSelector((state) => state.selectNFT);
   const isInselectNFTs = (n) =>
-      selectNFTs?.indexOf(
+    selectNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
 
@@ -47,15 +47,6 @@ export function MyNFTsSelector() {
     }
     get();
   }, [address]);
-
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
 
   return (
     <WindowContent>

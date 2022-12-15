@@ -40,7 +40,7 @@ export function MyListings() {
   /**
    * Redux
    */
-  const { selectNFTs, isSameCollection } = useSelector((state) => state.selectNFT);
+  const selectNFTs = useSelector((state) => state.selectNFT);
   const dispatch = useDispatch();
 
   /**
@@ -61,7 +61,7 @@ export function MyListings() {
   const [pools, setPools] = React.useState([])
   const contract = new web3.eth.Contract(LSSVMFactory, factoryAddress[chain?.id])
   const isInselectNFTs = (n) =>
-    selectNFTs.indexOf(
+    selectNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
   const [fauxselectedRow, setFauxSelectedRow] = React.useState({})
@@ -274,16 +274,6 @@ export function MyListings() {
     else if (isModifyingNFTOfPool == 2 && tokenURIs?.[0]) y()
     else setMyNFTs([])
   }, [isModifyingNFTOfPool, selectedRow])
-
-  React.useEffect(() => {
-    if (!isSameCollection) {
-      dispatch(setModalStatus({
-        type: ModalTypes.ERROR,
-        message: 'Can only select NFTs from the same collection'
-      }))
-    }
-  }, [isSameCollection])
-
 
   /**
    * Dependent auto states
