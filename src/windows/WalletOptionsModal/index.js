@@ -9,7 +9,7 @@ export function WalletOptionsModal() {
   const { address } = useAccount()
 
   return (
-    <WindowContent>
+    <div className='window-content'>
       <List>
         {connectors.map((connector) => (
           <ListItem
@@ -28,6 +28,6 @@ export function WalletOptionsModal() {
         <br></br>
       {error && <p>{error.message}</p>}
         {address && <><p>Connected as {address}. </p><p>Please disconnect from your wallet app if needed.</p></>}
-    </WindowContent>
+    </div>
   );
 }

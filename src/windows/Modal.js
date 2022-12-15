@@ -57,17 +57,17 @@ export function Modal() {
               gap: "0.25rem",
             }}
           >
-            <Button onClick={handleCloseButton}>
+            <div className='button' onClick={handleCloseButton}>
               <span className="close-icon" />
-            </Button>
+            </div>
           </div>
         </WindowHeader>
         <div>{message}</div>
         {type === ModalTypes.INFO && (
           <div>
-            <TextField onChange={handleInputChange} type="number"></TextField>
-            <Button onClick={handleConfirm}>Ok</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
+            <input className="input" onChange={handleInputChange} type="number"></input>
+            <div className='button' onClick={handleConfirm}>Ok</div>
+            <div className='button' onClick={handleCancel}>Cancel</div>
           </div>
         )}
       </Window>

@@ -292,8 +292,8 @@ export function MyListings() {
     }
   })
 
-  return <WindowContent>
-    {selectedRow?.collection ? <Button onClick={() => dispatch(setSelectedRow({}))}>Re-select</Button> : <></>}
+  return <div className='window-content'>
+    {selectedRow?.collection ? <div className='button' onClick={() => dispatch(setSelectedRow({}))}>Re-select</div> : <></>}
     <Table>
       <TableHead>
         <TableRow head>
@@ -320,26 +320,26 @@ export function MyListings() {
     </Table>
     <br></br>
     {selectedRow?.collection ? <Fieldset label="Actions">
-      <Button onClick={
+      <div className='button' onClick={
         async () => {
           const spotPrice = await promptDialog('Input new spot price (in ETH)');
           setNewSpotPrice(spotPrice)
         }
-      }>Change Spot Price</Button>
-      <Button onClick={
+      }>Change Spot Price</div>
+      <div className='button' onClick={
         async () => {
           const delta = await promptDialog('Input new delta (in ETH)');
           setNewDelta(delta)
         }
-      }>Change Delta</Button>
+      }>Change Delta</div>
       {selectedRow?.nftExposure !== undefined ? <>
-        <Button onClick={() => setIsModityingNFTOfPool(1)}>Add NFT</Button>
-        <Button onClick={() => setIsModityingNFTOfPool(2)}>Remove NFT</Button>
-        <Button disabled={data} onClick={() => writeApprove?.()}>Approve Collection For Trade</Button>
+        <div className='button' onClick={() => setIsModityingNFTOfPool(1)}>Add NFT</div>
+        <div className='button' onClick={() => setIsModityingNFTOfPool(2)}>Remove NFT</div>
+        <div className='button' disabled={data} onClick={() => writeApprove?.()}>Approve Collection For Trade</div>
         <br></br>
         <p>NFTs Listed for Trade: {NFTIdsListed?.map(e => `#${e}, `)}</p>
       </> : <></>}
-      {isModifyingNFTOfPool === 1 ? <Button onClick={writeAddRemove}>Add {selectNFTs.length} NFT(s) to Pool</Button> : isModifyingNFTOfPool === 2 ? <Button onClick={writeAddRemove}>Remove {selectNFTs.length} NFT(s) from Pool</Button> : <></>}
+      {isModifyingNFTOfPool === 1 ? <div className='button' onClick={writeAddRemove}>Add {selectNFTs.length} NFT(s) to Pool</div> : isModifyingNFTOfPool === 2 ? <div className='button' onClick={writeAddRemove}>Remove {selectNFTs.length} NFT(s) from Pool</div> : <></>}
       {isModifyingNFTOfPool > 0 ? <div style={{
         display: "flex",
         flexDirection: "row",
@@ -379,17 +379,17 @@ export function MyListings() {
         })}
       </div> : <></>}
       {selectedRow?.ethExposure !== undefined ? <>
-        <Button onClick={
+        <div className='button' onClick={
           async () => {
             const withd = await promptDialog('Input withdrawal amount (in ETH)')
             setWithdrawalAmount(withd)
           }
-        }>Withdraw ETH</Button>
+        }>Withdraw ETH</div>
         <br></br>
-        <p>You will receive WETH instead of ETH. Unwrap them to ETH here: <Anchor href="https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" target="_blank">https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2</Anchor></p>
+        <p>You will receive WETH instead of ETH. Unwrap them to ETH here: <a className='anchor' href="https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" target="_blank">https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2</a></p>
 
       </> : <></>}
 
     </Fieldset> : <></>}
-  </WindowContent>
+  </div>
 }

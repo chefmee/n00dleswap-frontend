@@ -90,12 +90,12 @@ export function CreateOffer({ type }) {
     if (keyword !== '') get()
   }, [keyword, chain.id])
 
-  return <WindowContent>
-    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
-      <Button onClick={() => {
+  return <div className='window-content'>
+    {nfts.length !== 1 ? <>Filter: <input className="input" placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></input></> :
+      <div className='button' onClick={() => {
         setNfts([])
         dispatch(setKeyword(''))
-      }}>Select again</Button>}
+      }}>Select again</div>}
 
     {nftCollectionAddress == keyword ? <></> :
       <Table>
@@ -118,21 +118,21 @@ export function CreateOffer({ type }) {
           </TableRow>)}
         </TableBody>
       </Table>}
-    <p>Start Price (ETH): <TextField onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></TextField></p>
-    <p>Price Decrement (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></p>
-    <p>Amount to stake (ETH): <TextField onChange={e => dispatch(setStakeAmount(e.target.value))} type='number'></TextField></p>
+    <p>Start Price (ETH): <input className="input" onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></input></p>
+    <p>Price Decrement (ETH): <input className="input" onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></input></p>
+    <p>Amount to stake (ETH): <input className="input" onChange={e => dispatch(setStakeAmount(e.target.value))} type='number'></input></p>
     <p>The first NFT being sold to this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) - Number(priceIncrement)} ETH, etc.</p>
     <p>Step 1:</p>
-    <Button disabled={new BigNumber(
+    <div className='button' disabled={new BigNumber(
       WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000'))
       || isWETHApproveLoading
       || !stakeAmount
       || !startPrice
       } onClick={() => writeWETHApprove?.()}>{isWETHApproveLoading? 'Approving Factory...': new BigNumber(
-        WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000')) ? 'Factory Approved': 'Approve Factory'}</Button>
+        WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000')) ? 'Factory Approved': 'Approve Factory'}</div>
     <p>Step 2:</p>
-    <Button onClick={() => {
+    <div className='button' onClick={() => {
         writeCreatePool?.()
-    }} disabled={isCreateLoading || isCreateSuccess}>{isCreateLoading? 'Making Offer...': isCreateSuccess? 'Offer made': 'Make Offer'}</Button>
-  </WindowContent>
+    }} disabled={isCreateLoading || isCreateSuccess}>{isCreateLoading? 'Making Offer...': isCreateSuccess? 'Offer made': 'Make Offer'}</div>
+  </div>
 }

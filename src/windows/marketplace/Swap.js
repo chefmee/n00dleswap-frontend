@@ -230,7 +230,7 @@ export function Swap() {
     if (!isPurchase) get()
   }, [address, nftCollectionAddress, isPurchase, isSellNFTSuccess])
 
-  return <WindowContent>
+  return <div className='window-content'>
     <Fieldset label='I am'>
       <Radio
         checked={isPurchase}
@@ -245,11 +245,11 @@ export function Swap() {
         label='selling'
         name='buyorsell' />
     </Fieldset>
-    {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT Address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
-      <Button onClick={() => {
+    {nfts.length !== 1 ? <>Filter: <input className="input" placeholder="keyword or NFT Address" onChange={e => dispatch(setKeyword(e.target.value))}></input></> :
+      <div className='button' onClick={() => {
         setNfts([])
         dispatch(setKeyword(''))
-      }}>Select again</Button>}
+      }}>Select again</div>}
     {web3.utils.isAddress(keyword) ? <></> :
       <Table>
         <TableHead>
@@ -273,14 +273,14 @@ export function Swap() {
       </Table>
     }
 
-    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <TextField onChange={e => dispatch(setAmount(e.target.value))} type='number'></TextField> : selectNFTs.length}</p>
+    <p>{isPurchase ? 'Purchase' : 'Sell'} amount (NFTs): {isPurchase ? <input className="input" onChange={e => dispatch(setAmount(e.target.value))} type='number'></input> : selectNFTs.length}</p>
     <p>You {isPurchase ? 'pay' : 'get'}: {new BigNumber(total)?.dividedBy('1000000000000000000').toString()} ETH</p>
     {
       amount > 0 && isPurchase ? <>
-        <Button disabled={new BigNumber(WETHAllowance.data?.toString())?.gt(total) || isWETHApproveLoading} onClick={() => writeWETHApprove?.()}>{isWETHApproveLoading? 'Approving Router For Trade...':'Approve Router for Trade'}</Button>
-        <Button disabled={new BigNumber(WETHAllowance.data?.toString())?.lte(total) || isBuyNFTLoading} onClick={() => {
+        <div className='button' disabled={new BigNumber(WETHAllowance.data?.toString())?.gt(total) || isWETHApproveLoading} onClick={() => writeWETHApprove?.()}>{isWETHApproveLoading? 'Approving Router For Trade...':'Approve Router for Trade'}</div>
+        <div className='button' disabled={new BigNumber(WETHAllowance.data?.toString())?.lte(total) || isBuyNFTLoading} onClick={() => {
           writeBuyNFT?.()
-        }}>{isBuyNFTLoading? 'Buying...': 'Buy'}</Button>
+        }}>{isBuyNFTLoading? 'Buying...': 'Buy'}</div>
         <p>Summary:</p>
         <p>{offers?.slice(0, !isPurchase ? selectNFTs?.length : amount).length} NFTs available for purchase</p>
         {Object.keys(offersPerPool || {}).map(o =>
@@ -332,12 +332,12 @@ export function Swap() {
         <LoadingIndicator isLoading />
       </>}
       </div><br></br>
-        <Button disabled={NFTAllowance || isApproveLoading} onClick={() => writeApproveNFT?.()}>{isApproveLoading ? 'Approving Router For Trade...': 'Approve Router for Trade'}</Button>
-        <Button disabled={!NFTAllowance || isSellNFTLoading} onClick={() => {
+        <div className='button' disabled={NFTAllowance || isApproveLoading} onClick={() => writeApproveNFT?.()}>{isApproveLoading ? 'Approving Router For Trade...': 'Approve Router for Trade'}</div>
+        <div className='button' disabled={!NFTAllowance || isSellNFTLoading} onClick={() => {
           writeSellNFT?.()
-        }}>{isSellNFTLoading? 'Selling...': 'Sell'}</Button>
+        }}>{isSellNFTLoading? 'Selling...': 'Sell'}</div>
         <br></br>
-        <p>You will receive WETH instead of ETH. Unwrap them to ETH here: <Anchor href="https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" target="_blank">https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2</Anchor></p></> : <></>
+        <p>You will receive WETH instead of ETH. Unwrap them to ETH here: <a className='anchor' href="https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" target="_blank">https://app.uniswap.org/#/swap?inputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2</a></p></> : <></>
     }
     {
       amount > 0 && offers?.length == 0 ? <p>No NFTs available for purchase</p> : <></>
@@ -345,6 +345,6 @@ export function Swap() {
     {
       !isPurchase && offers?.length == 0 ? <p>No offers available</p> : <></>
     }
-  </WindowContent>
+  </div>
 
 }
