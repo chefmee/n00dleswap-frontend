@@ -278,7 +278,7 @@ export default function Default() {
                     <span role='img' aria-label='👨‍🍳' >
                       👨‍🍳
                     </span>
-                    &nbsp;Prepare Meal (Earn fees)
+                    &nbsp;Fee staking
                   </ListItem>
                   {/* <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
                     <span role='img' aria-label='🍴' >
