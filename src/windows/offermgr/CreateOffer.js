@@ -10,7 +10,6 @@ import { useApproveToken } from "../../interactors/useApproveToken";
 import { useGetTokenAllowance } from "../../interactors/useGetTokenAllowance";
 import { setStartPrice, setPriceIncrement, setStakeAmount, setKeyword } from "../../reducers/offer";
 import { setModalStatus } from "../../reducers/modal";
-import { usePrompt } from "../../hooks/usePrompt";
 
 const factoryAddress = {
   '5': '0x875CC787648E5aaC2b1f01F104b064a8b3e6095B',
@@ -82,13 +81,14 @@ export function CreateOffer({ type }) {
       }))
     }
   }, [isPrepareCreateError])
+
   React.useEffect(() => {
     async function get() {
       const res = await axios.get(`https://core-service-ipnp6ty54a-uc.a.run.app/collections/search?ethereum=${chain?.id}&query=${keyword}`)
       setNfts(res.data)
     }
     if (keyword !== '') get()
-  }, [keyword])
+  }, [keyword, chain.id])
 
   return <WindowContent>
     {nfts.length !== 1 ? <>Filter: <TextField placeholder="keyword or NFT contract address" onChange={e => dispatch(setKeyword(e.target.value))}></TextField></> :
@@ -109,7 +109,7 @@ export function CreateOffer({ type }) {
         <TableBody>
           {nfts.map(sn => <TableRow onClick={() => setNfts([sn])}>
             <TableDataCell style={{ textAlign: 'center' }}>
-              <img src={sn.imageUrl} style={{
+              <img src={sn.imageUrl} alt='nft' style={{
                 maxHeight: '30px'
               }} />
             </TableDataCell>
@@ -132,10 +132,7 @@ export function CreateOffer({ type }) {
         WETHAllowance.data?.toString()).gte(new BigNumber(stakeAmount).times('1000000000000000000')) ? 'Factory Approved': 'Approve Factory'}</Button>
     <p>Step 2:</p>
     <Button onClick={() => {
-
         writeCreatePool?.()
-
-
     }} disabled={isCreateLoading || isCreateSuccess}>{isCreateLoading? 'Making Offer...': isCreateSuccess? 'Offer made': 'Make Offer'}</Button>
   </WindowContent>
 }
