@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { configureChains, chain } from 'wagmi'
@@ -9,8 +8,9 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import store from './store.js'
 import { Provider } from 'react-redux'
-
 import { WagmiConfig, createClient } from 'wagmi'
+import './index.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
@@ -39,10 +39,11 @@ const client = createClient({
 })
 
 root.render(
-  <Provider store={store}><WagmiConfig client={client}><App />
-  </WagmiConfig></Provider>
-
-
+  <Provider store={store}>
+    <WagmiConfig client={client}>
+      <App />
+    </WagmiConfig>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,5 +1,5 @@
 import { Button } from "react95";
 
 export function MaxButton({changeFunction, target}) {
-  return <Button onClick={() => changeFunction(target)}>Max</Button>
+  return <div className='button' onClick={() => changeFunction(target)}>Max</div>
 }

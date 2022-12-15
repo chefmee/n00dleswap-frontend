@@ -81,8 +81,8 @@ export function CreatePool({ type }) {
     if (isSuccess) dispatch(unselectAll())
   }, [isSuccess])
 
-  return <WindowContent>
-    <div>You are listing {selectNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectNFTs[0]?.split('|*|')[0]}>{selectNFTs[0]?.split('|*|')[0]}</Anchor></div>
+  return <div className='window-content'>
+    <div>You are listing {selectNFTs.length} NFT(s) from <a className='anchor' target={'_blank'} href={'https://etherscan.io/address/' + selectNFTs[0]?.split('|*|')[0]}>{selectNFTs[0]?.split('|*|')[0]}</a></div>
     <Table>
       <TableHead>
         <TableRow head>
@@ -129,14 +129,14 @@ export function CreatePool({ type }) {
           name='lmode' />
       </Tooltip>
     </Fieldset>
-    <div>Start Price (ETH): <TextField onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></TextField></div>
-    <div>Price Increment (ETH): <TextField onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></TextField></div>
+    <div>Start Price (ETH): <input className="input" onChange={e => dispatch(setStartPrice(e.target.value))} type='number'></input></div>
+    <div>Price Increment (ETH): <input className="input" onChange={e => dispatch(setPriceIncrement(e.target.value))} type='number'></input></div>
     <div>The first NFT being sold in this pool will have a sell price of {startPrice} ETH and the second will be sold at {Number(startPrice) + Number(priceIncrement)} ETH, etc.</div>
     <div>Step 1:</div>
-    <Button disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</Button><br></br>
+    <div className='button' disabled={isApproveLoading || NFTAllowance} onClick={() => write?.()}>{isApproveLoading ? 'Approving collection for trade...' : NFTAllowance ? 'Collection allowed for trade' : 'Approve collection for trade'}</div><br></br>
     <div>Step 2:</div>
-    <Button disabled={isLoading || !NFTAllowance} onClick={() => {
+    <div className='button' disabled={isLoading || !NFTAllowance} onClick={() => {
       writeCreatePool?.()
-    }}>{isLoading ? 'Creating Pool...' : 'Create Pool'}</Button>
-  </WindowContent>
+    }}>{isLoading ? 'Creating Pool...' : 'Create Pool'}</div>
+  </div>
 }
