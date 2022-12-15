@@ -25,4 +25,4 @@ export const modalSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { setModalStatus, closeModal } = modalSlice.actions
 
-export default modalSlice.reducer
+export default modalSlice.reducer 

@@ -1,7 +1,6 @@
 
 import React from "react";
 import { ThemeProvider } from "styled-components";
-
 import {
   AppBar,
   Toolbar,
@@ -18,10 +17,8 @@ import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
 
 import {useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
-
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { Wrapper, GlobalStyles } from './Styles';
-
 import logoIMG from './assets/noodlogo.png';
 import InfoWindow from './windows/Info';
 import IexploreWindow from './windows/Iexplore';
@@ -49,13 +46,12 @@ export default function Default() {
   const [welcomeWindow, setWelcomeWindow] = React.useState(true);
   const [iexploreWindow, setIexploreWindow] = React.useState(false);
   const [initialized, setInitialized] = React.useState(false);
-  const [showWalletOptions, setShowWalletOptions] = React.useState(false);
-
   const [iframesrc, _setIframesrc] = React.useState("");
-
   const [isEligible, setIsEligible] = React.useState(
     false || process.env.NODE_ENV === "development"
   );
+  const [windowPositions, setWindowPositions] = React.useState({});
+  const [windowSizes, setWindowSizes] = React.useState({});
   const windowStack = useSelector((state) => state.openWindow);
   const { message } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
@@ -86,15 +82,10 @@ export default function Default() {
     walletSelector: <WalletOptionsModal></WalletOptionsModal>
   };
   const [width, height] = useWindowSize();
-
-  const spawnStraySheep = () => {
-    const esheep = new window.eSheep();
-    esheep.Start();
-  };
-
-  const onConnectButtonClicked = () => {
-    setWindowStack({ action: "push", window: "walletSelector" })
-  };
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork()
+  const { address, isConnected } = useAccount();
+  const { data: ensName } = useEnsName({ address });
 
   React.useEffect(() => {
     if (window.eSheep) {
@@ -124,17 +115,7 @@ export default function Default() {
         }
       });
     }
-  }, [width, height]);
-
-  function setIframesrc(x) {
-    if (windowStack.indexOf("iexplore") === -1)
-      setWindowStack({ action: "push", window: "iexplore" });
-    _setIframesrc(x);
-  }
-  const { chain } = useNetwork();
-
-
-  const { switchNetwork } = useSwitchNetwork()
+  }, [width, height, windowPositions]);
 
   React.useEffect(() => {
     if (chain?.id && chain?.id != 1 && chain?.id != 5) {
@@ -143,19 +124,29 @@ export default function Default() {
         message: `Network ${chain?.id} not supported. A switch network prompt is activated in Metamask to help you switch the network.`
       }))
       switchNetwork?.(1) // switch to ethereum network
-
     }
   }, [chain])
-  const { address, isConnected } = useAccount();
-  const { data: ensName } = useEnsName({ address });
-  const [windowPositions, setWindowPositions] = React.useState({});
-  const [windowSizes, setWindowSizes] = React.useState({});
+
+
+  const spawnStraySheep = () => {
+    const esheep = new window.eSheep();
+    esheep.Start();
+  };
+
+  const onConnectButtonClicked = () => {
+    setWindowStack({ action: "push", window: "walletSelector" })
+  };
+
+  function setIframesrc(x) {
+    if (windowStack.indexOf("iexplore") === -1)
+      setWindowStack({ action: "push", window: "iexplore" });
+    _setIframesrc(x);
+  }
 
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
       <ThemeProvider theme={original}>
-
         {
           windowStack.map((window, i) => {
             return (

@@ -5,8 +5,8 @@ import { select, unselectAll } from "../../reducers/selectNFT";
 import { open as openWindow } from "../../reducers/openWindow";
 import { useAccount, useNetwork } from "wagmi";
 import axios from "axios";
-import { setModalStatus } from "../../reducers/modal";
-import { ModalTypes } from "../../constants/modalTypes";
+import { nth } from "lodash";
+
 export function MyNFTsSelector() {
   /**
    * Wagmi init
@@ -25,9 +25,9 @@ export function MyNFTsSelector() {
    * States
    */
   const [loadBar, setLoadBar] = React.useState(true);
-  const selectNFTs = useSelector((state) => state.selectNFT);
-  const isInselectNFTs = (n) =>
-    selectNFTs?.indexOf(
+  const selectedNFTs = useSelector((state) => state.selectNFT);
+  const isInSelectedNFTs = (n) =>
+    selectedNFTs?.indexOf(
       n.address + "|*|" + n.id + "|*|" + n.imageUrl + "|*|" + n.name
     ) !== -1;
 
@@ -79,14 +79,14 @@ export function MyNFTsSelector() {
         <>
           <p style={{ padding: "0.5rem" }}>
             Select your NFTs to list them for sale &nbsp;{" "}
-            {selectNFTs?.length ? (
+            {selectedNFTs?.length ? (
               <>
                 <Button
                   onClick={() =>
                     setWindowStack({ action: "push", window: "createpool" })
                   }
                 >
-                  List {selectNFTs?.length} NFTs
+                  List {selectedNFTs?.length} NFTs
                 </Button>
                 <Button
                   onClick={() => {
@@ -113,7 +113,7 @@ export function MyNFTsSelector() {
               return (
                 <Panel
                   onClick={() => dispatch(select(n))}
-                  variant={!isInselectNFTs(n) ? "inside" : "well"}
+                  variant={!isInSelectedNFTs(n) ? "inside" : "well"}
                   key={n.address + "|*|" + n.id}
                   style={{
                     marginTop: "1rem",
@@ -150,7 +150,7 @@ export function MyNFTsSelector() {
               width: "100%",
             }}
           >
-            NFTs selected: {selectNFTs?.length}
+            NFTs selected: {selectedNFTs?.length}
           </Panel>
         </>
       )}
