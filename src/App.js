@@ -40,6 +40,7 @@ import { WalletOptionsModal } from "./windows/WalletOptionsModal";
 import { Modal } from "./windows/Modal";
 import { setModalStatus } from "./reducers/modal";
 import { ModalTypes } from "./constants/modalTypes";
+import './App.css';
 
 export default function Default() {
   const [open, setOpen] = React.useState(false);
@@ -146,7 +147,6 @@ export default function Default() {
   return (
     <Wrapper>
       <GlobalStyles></GlobalStyles>
-      <ThemeProvider theme={original}>
         {
           windowStack.map((window, i) => {
             return (
@@ -169,8 +169,8 @@ export default function Default() {
                     setIexploreWindow(!iexploreWindow);
                   }}
                 default={{
-                  x: 50 + (i * 40),
-                  y: 50 + (i * 40),
+                  x: (width / 2 - 200) + (i * 40),
+                  y: 100 + (i * 40),
                   width: 1000,
                 }}
                 position={windowPositions[window]}
@@ -190,165 +190,99 @@ export default function Default() {
                 maxWidth={'100vw'}
                 maxHeight={'70vh'}
               >
-                <Window>
-                <WindowHeader
-                  active={i === windowStack.length - 1}
-                  className="window-header"
-                >
-                  <span>{window}.exe</span>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                      gap: "0.25rem",
-                    }}
-                  >
-                    {/* <Button onClick={(event) => {
-                        setWindowStack({ action: 'max', window: win });
-                      }}>
-                      </Button> */}
-                    <Button
-                      onClick={(event) => {
-                        setWindowStack({ action: "del", window: window });
+                <div className="window">
+                  <div active={i === windowStack.length - 1} className='window-header'>
+                    <span>{window}.exe</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-evenly', gap: '0.25rem' }}>
+                      <div className='close-button' onClick={(event) => {
+                        setWindowStack({ action: 'del', window: window });
                         setWelcomeWindow(!welcomeWindow);
                         event.stopPropagation();
-                      }}
-                    >
-                      <span className="close-icon" />
-                    </Button>
+                      }}>
+                        <span className='close-icon' />
+                      </div>
+                    </div>
                   </div>
-                </WindowHeader>
-                <div
-                  style={{
-                    overflowY: "scroll",
-                    overflowX: "hidden",
-                    height: "calc(100% - 2.5em)",
-                  }}
-                >
-                  {windows[window]}
+                  <div>
+                    {windows[window]}
+                  </div>
                 </div>
-              </Window>
             </Rnd>
           );
         })}
         {message.length > 0 && <Modal />}
 
-        <AppBar>
-          <Toolbar style={{ justifyContent: "space-between" }}>
-            <div style={{ position: "relative", display: "inline-block" }}>
-              <Button
-                onClick={() => setOpen(!open)}
-                active={open}
-                style={{ fontWeight: "bold" }}
-              >
-                <img
-                  src={logoIMG}
-                  alt="react95 logo"
-                  style={{ height: "20px", marginRight: 4 }}
-                />
-                Start
-              </Button>
-              {open && (
-                <List
-                  style={{
-                    position: "absolute",
-                    left: "0",
-                    top: "100%",
-                  }}
-                  onClick={() => setOpen(false)}
-                >
-                  <ListItem disabled={address} onClick={onConnectButtonClicked}>
-                    <span role='img' aria-label='🔗'>
+        <div className='toolbar'>
+          <div className='start-button' onClick={() => setOpen(!open)}>
+            <img
+              src={logoIMG}
+              alt='react95 logo'
+              style={{ height: '20px', marginRight: '14px' }}
+            />
+            Start
+          </div>
+          {open && (
+            <div className='menu' onClick={() => setOpen(false)}>
+              <div className={`menu-item ${!address ? '' : 'menu-item-disabled'}`} onClick={onConnectButtonClicked}>
+                <span role='img' aria-label='🔗'>
+                  🔗
+                </span>
+                {address ? 'Connected' : 'Connect Wallet'}
+              </div>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
+                <span role='img' aria-label='👨‍🍳' >
+                  👨‍🍳
+                </span>
+                &nbsp;Fee staking
+              </div>
+              {/* <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
+                <span role='img' aria-label='🍴' >
+                  🍴
+                </span>
+                Dining Table (Staking)
+              </div> */}
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'nftselector' })}>
+                <span role='img' aria-label='🤑' >
+                  🤑
+                </span>
+                List your NFT
+              </div>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'createoffer' })}>
+                <span role='img' aria-label='💱' >
+                  💱
+                </span>
+                Create offer for NFT
+              </div>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'mypools' })}>
+                <span role='img' aria-label='🏊' >
+                  🏊
+                </span>
+                My Pools
+              </div>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => setWindowStack({ action: 'push', window: 'sweep' })}>
+                <span role='img' aria-label='🔀'>
+                  🔀
+                </span>
+                Sweep NFTs
+              </div>
 
-                      🔗
-                    </span>
-                    {address ? "Connected" : "Connect Wallet"}
-                  </ListItem>
-                  <Divider></Divider>
-                  <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'x' })}>
-                    <span role='img' aria-label='👨‍🍳' >
-                      👨‍🍳
-                    </span>
-                    &nbsp;Fee staking
-                  </ListItem>
-                  {/* <ListItem disabled={!address} onClick={() => setWindowStack({ action: 'push', window: 'stake' })}>
-                    <span role='img' aria-label='🍴' >
-                      🍴
-                    </span>
-                    Dining Table (Staking)
-                  </ListItem> */}
-                  <Divider />
-                  <ListItem
-                    disabled={!address}
-                    onClick={() =>
-                      setWindowStack({ action: "push", window: "nftselector" })
-                    }
-                  >
-                    <span role="img" aria-label="🤑">
-                      🤑
-                    </span>
-                    List your NFT
-                  </ListItem>
-                  <ListItem
-                    disabled={!address}
-                    onClick={() =>
-                      setWindowStack({ action: "push", window: "createoffer" })
-                    }
-                  >
-                    <span role="img" aria-label="💱">
-                      💱
-                    </span>
-                    Create offer for NFT
-                  </ListItem>
-                  <ListItem
-                    disabled={!address}
-                    onClick={() =>
-                      setWindowStack({ action: "push", window: "mypools" })
-                    }
-                  >
-                    <span role="img" aria-label="🏊">
-                      🏊
-                    </span>
-                    My Pools
-                  </ListItem>
-                  <Divider></Divider>
-                  <ListItem
-                    disabled={!address}
-                    onClick={() =>
-                      setWindowStack({ action: "push", window: "sweep" })
-                    }
-                  >
-                    <span role="img" aria-label="🔀">
-                      🔀
-                    </span>
-                    Sweep NFTs
-                  </ListItem>
-                  <Divider />
-
-                  <ListItem
-                    onClick={() => {
-                      setWindowStack({ action: "push", window: "n00d" });
-                      setWelcomeWindow(true);
-                    }}
-                  >
-                    <span role="img" aria-label="👨‍💻">
-                      👨‍💻
-                    </span>
-                    Info
-                  </ListItem>
-                  <ListItem
-                    onClick={() => {
-                      spawnStraySheep();
-                    }}
-                  >
-                    straysheep.exe
-                  </ListItem>
-                </List>
-              )}
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => {
+                setWindowStack({ action: 'push', window: 'n00d' });
+                setWelcomeWindow(true);
+              }}>
+                <span role='img' aria-label='👨‍💻'>
+                  👨‍💻
+                </span>
+                Info
+              </div>
+              <div className={`menu-item ${address ? '' : 'menu-item-disabled'}`} onClick={() => {
+                spawnStraySheep();
+              }}>
+                straysheep.exe
+              </div>
             </div>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+          )}
+        </div>
     </Wrapper>
   );
 }
