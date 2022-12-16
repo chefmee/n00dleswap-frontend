@@ -18,28 +18,28 @@ import original from "react95/dist/themes/original";
 
 import {useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { Wrapper, GlobalStyles } from '../Styles';
-import logoIMG from '../assets/noodlogo.png';
-import InfoWindow from '../windows/Info';
-import IexploreWindow from '../windows/Iexplore';
-import StakeWindow from '../windows/staking/Stake';
-import { MyNFTsSelector } from '../windows/listingmgr/MyNFTsSelector';
+import { Wrapper, GlobalStyles } from '../../Styles';
+import logoIMG from '../../assets/noodlogo.png';
+import InfoWindow from '../../windows/Info';
+import IexploreWindow from '../../windows/Iexplore';
+import StakeWindow from '../../windows/staking/Stake';
+import { MyNFTsSelector } from '../../windows/listingmgr/MyNFTsSelector';
 import { useDispatch, useSelector } from 'react-redux';
-import { open as openWindow } from '../reducers/openWindow';
-import { CreatePool } from '../windows/listingmgr/CreatePool';
-import { ImagePreview } from '../windows/utils/ImagePreview';
-import { CreateOffer } from '../windows/offermgr/CreateOffer';
-import { Swap } from '../windows/marketplace/Swap';
-import { MyListings } from '../windows/listingmgr/MyPools';
-import { XSushiStaking } from '../windows/staking/xSushiStaking';
+import { open as openWindow } from '../../reducers/openWindow';
+import { CreatePool } from '../../windows/listingmgr/CreatePool';
+import { ImagePreview } from '../../windows/utils/ImagePreview';
+import { CreateOffer } from '../../windows/offermgr/CreateOffer';
+import { Swap } from '../../windows/marketplace/Swap';
+import { MyListings } from '../../windows/listingmgr/MyPools';
+import { XSushiStaking } from '../../windows/staking/xSushiStaking';
 import { Rnd } from 'react-rnd';
 import {
   useWindowSize,
 } from '@react-hook/window-size';
-import { WalletOptionsModal } from "../windows/WalletOptionsModal";
-import { Modal } from "../windows/Modal";
-import { setModalStatus } from "../reducers/modal";
-import { ModalTypes } from "../constants/modalTypes";
+import { WalletOptionsModal } from "../../windows/WalletOptionsModal";
+import { Modal } from "../../windows/Modal";
+import { setModalStatus } from "../../reducers/modal";
+import { ModalTypes } from "../../constants/modalTypes";
 
 export default function Home() {
   const [open, setOpen] = React.useState(false);
