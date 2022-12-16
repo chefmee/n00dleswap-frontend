@@ -18,7 +18,7 @@ import original from "react95/dist/themes/original";
 
 import {useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { Wrapper, GlobalStyles } from '../../Styles';
+import { Wrapper } from './styles';
 import logoIMG from '../../assets/noodlogo.png';
 import InfoWindow from '../../windows/Info';
 import IexploreWindow from '../../windows/Iexplore';
@@ -145,7 +145,6 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <GlobalStyles></GlobalStyles>
       <ThemeProvider theme={original}>
         {
           windowStack.map((window, i) => {

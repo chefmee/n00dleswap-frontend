@@ -2,14 +2,17 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
+import './App.css';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Landing />} />
-      </Routes>
+      <div className='App'>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/landing" element={<Landing />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

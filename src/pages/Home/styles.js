@@ -8,6 +8,7 @@ import ms_sans_serif_bold from 'react95/dist/fonts/ms_sans_serif_bold.woff2';
 
 export const Wrapper = styled.div`
   padding: 5rem;
+  height: 100vh;
   .window-header {
         display: flex;
         align-items: center;
@@ -41,23 +42,4 @@ export const Wrapper = styled.div`
           transform: translateY(-50%);
         }
       }
-`;
-
-export const GlobalStyles = createGlobalStyle`
-  ${styleReset}
-  @font-face {
-    font-family: 'ms_sans_serif';
-    src: url('${ms_sans_serif}') format('woff2');
-    font-weight: 400;
-    font-style: normal
-  }
-  @font-face {
-    font-family: 'ms_sans_serif';
-    src: url('${ms_sans_serif_bold}') format('woff2');
-    font-weight: bold;
-    font-style: normal
-  }
-  body {
-    font-family: 'ms_sans_serif';
-  }
 `;
