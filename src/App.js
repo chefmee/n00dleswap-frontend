@@ -1,21 +1,11 @@
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
 import Home from "./pages/Home";
-import Landing from "./pages/Landing";
 import './App.css';
 
-export default function App() {
+export default function Default() {
   return (
-    <BrowserRouter>
-      <div className='App'>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/landing" element={<Landing />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <Home />
+    </div>
   );
 }
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />)
