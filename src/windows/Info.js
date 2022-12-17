@@ -7,7 +7,7 @@ import {useAccount, useContractWrite} from "wagmi";
 
 export default function InfoWindow({ setIframesrc  }) {
     const {address} = useAccount()
-    const proof = merkleProof.proofs[address.toLowerCase() || '']
+    const proof = merkleProof.proofs[address?.toLowerCase() || '']
     const { write: writeClaim } = useContractWrite({
         mode: 'recklesslyUnprepared',
         overrides: {
@@ -16,7 +16,7 @@ export default function InfoWindow({ setIframesrc  }) {
         addressOrName: '0x69d5fFD7850F6732FC5c5f10174bF7a350e21e18' ,
         contractInterface: noodOGABI,
         functionName: 'claimAllowList',
-        args: [1, proof.proof, proof.index],
+        args: [1, proof?.proof, proof?.index],
     })
   return (
 
