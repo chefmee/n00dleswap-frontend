@@ -3,12 +3,16 @@ import {
   WindowContent, Button, Anchor
 } from 'react95';
 import {useAccount, useContractWrite} from "wagmi";
+import {useDispatch} from "react-redux";
+import {setModalStatus} from "../reducers/modal";
+import {ModalTypes} from "../constants/modalTypes";
 
 
 export default function InfoWindow({ setIframesrc  }) {
     const {address} = useAccount()
+    const dispatch = useDispatch()
     const proof = merkleProof.proofs[address?.toLowerCase() || '']
-    const { write: writeClaim } = useContractWrite({
+    const { write: writeClaim, isError, error } = useContractWrite({
         mode: 'recklesslyUnprepared',
         overrides: {
             value: 0,
@@ -18,6 +22,12 @@ export default function InfoWindow({ setIframesrc  }) {
         functionName: 'claimAllowList',
         args: [1, proof?.proof, proof?.index],
     })
+    React.useEffect(() => {
+        if (isError && error.message.includes('invalid value for array')) dispatch(setModalStatus({
+            type: ModalTypes.ERROR,
+            message: `You are not in the list.`
+        }))
+    }, [isError])
   return (
 
     <WindowContent>
@@ -27,11 +37,13 @@ export default function InfoWindow({ setIframesrc  }) {
         Press "Start" to see all available functions.
       </p>
         <br />
-            <br />
                 <p>Mainnet is LIVE! Thank you all testers for bringing this to reality. Here's your little gift.</p>
       <Button onClick={
           () => {
-    writeClaim?.()
+
+                  writeClaim?.()
+
+
           }
       }>🍜&nbsp;Claim POAP (ETH mainnet only)</Button>
       <br></br><br></br>
