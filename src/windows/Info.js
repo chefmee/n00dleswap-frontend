@@ -40,10 +40,11 @@ export default function InfoWindow({ setIframesrc  }) {
                 <p>Mainnet is LIVE! Thank you all testers for bringing this to reality. Here's your little gift.</p>
       <Button onClick={
           () => {
-
-                  writeClaim?.()
-
-
+            if (!address) dispatch(setModalStatus({
+                type: ModalTypes.ERROR,
+                message: `Please connect your wallet first.`
+            }))
+            writeClaim?.()
           }
       }>🍜&nbsp;Claim POAP (ETH mainnet only)</Button>
       <br></br><br></br>
