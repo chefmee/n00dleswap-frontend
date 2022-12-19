@@ -6,11 +6,13 @@ import {useAccount, useContractWrite} from "wagmi";
 import {useDispatch} from "react-redux";
 import {setModalStatus} from "../reducers/modal";
 import {ModalTypes} from "../constants/modalTypes";
+import {open as openWindow} from "../reducers/openWindow";
 
 
 export default function InfoWindow({ setIframesrc  }) {
     const {address} = useAccount()
     const dispatch = useDispatch()
+    const setWindowStack = (a) => dispatch(openWindow(a));
     const proof = merkleProof.proofs[address?.toLowerCase() || '']
     const { write: writeClaim, isError, error } = useContractWrite({
         mode: 'recklesslyUnprepared',
@@ -44,6 +46,9 @@ export default function InfoWindow({ setIframesrc  }) {
                 type: ModalTypes.ERROR,
                 message: `Please connect your wallet first.`
             }))
+            setWindowStack(
+              { action: "push", window: "walletSelector" }
+            )
             writeClaim?.()
           }
       }>🍜&nbsp;Claim POAP (ETH mainnet only)</Button>
