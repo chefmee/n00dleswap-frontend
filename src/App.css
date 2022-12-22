@@ -1,6 +1,10 @@
 .App {
-  text-align: center;
-  background-image: url('noodlebar.jpg');
+  padding: 20px;
+  font-family: 'DinBlack';
+  background-image: url('assets/PNG/Background1.png');
+  background-color: #000000;
+  background-repeat: no-repeat;
+  background-position-x: center;
 }
 
 .App-logo {
