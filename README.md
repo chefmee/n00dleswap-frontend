@@ -3,7 +3,10 @@
 2. Fork this project
 3. Make changes
 4. Submit pull request and link issue
-5. Get rewarded
+5. Get rewarded\
+
+
+test deploy
 
 # Env
 Add your alchemy API key to the `.env` file for the app to work
