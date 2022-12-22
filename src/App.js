@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./pages/Landing";
+import Landing from "./pages/Landing";
 import './App.css';
 
 export default function Default() {
