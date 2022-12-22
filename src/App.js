@@ -43,6 +43,7 @@ import {useLocation} from "react-router-dom";
 export default function Default() {
   const search = useLocation().search;
   const action = new URLSearchParams(search).get("action");
+  const collectionAddress = new URLSearchParams(search).get("collectionAddress");
 
 
   const [open, setOpen] = React.useState(false);
@@ -110,7 +111,7 @@ export default function Default() {
       } else {
         dispatch(setModalStatus({
           type: ModalTypes.ERROR,
-          message: `Please connect your wallet first to complete the listing.`
+          message: `You are about to list an NFT from collection address ${collectionAddress}. Please connect your wallet first to complete the listing.`
         }))
       }
 
