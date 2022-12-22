@@ -32,6 +32,7 @@
     "react-draggable": "^4.4.5",
     "react-redux": "^8.0.2",
     "react-rnd": "^10.3.7",
+    "react-router-dom": "^6.6.0",
     "react-scripts": "4.0.3",
     "react95": "^3.12.2",
     "recursive-fs": "^2.1.0",

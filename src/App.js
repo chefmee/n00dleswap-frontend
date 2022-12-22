@@ -10,14 +10,12 @@ import {
   Divider,
   Window,
   WindowHeader,
-  WindowContent,
 } from "react95";
 // pick a theme of your choice
 import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
 
-import {useAccount, useConnect, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import {useAccount, useEnsName, useNetwork, useSwitchNetwork} from 'wagmi';
 import { Wrapper, GlobalStyles } from './Styles';
 import logoIMG from './assets/noodlogo.png';
 import InfoWindow from './windows/Info';
@@ -40,8 +38,13 @@ import { WalletOptionsModal } from "./windows/WalletOptionsModal";
 import { Modal } from "./windows/Modal";
 import { setModalStatus } from "./reducers/modal";
 import { ModalTypes } from "./constants/modalTypes";
+import {useLocation} from "react-router-dom";
 
 export default function Default() {
+  const search = useLocation().search;
+  const action = new URLSearchParams(search).get("action");
+
+
   const [open, setOpen] = React.useState(false);
   const [welcomeWindow, setWelcomeWindow] = React.useState(true);
   const [iexploreWindow, setIexploreWindow] = React.useState(false);
@@ -94,12 +97,25 @@ export default function Default() {
         esheep.Start();
         setWindowStack({ action: "push", window: "n00d" });
 
-        if (address) setWindowStack({ action: "push", window: "walletSelector" });
-
+        setWindowStack({ action: "push", window: "walletSelector" });
         setInitialized(true);
       }
     }
   }, [window.eSheep]);
+
+  React.useEffect(() => {
+    if (action === 'list') {
+      if (address) {
+        setWindowStack({ action: "push", window: "createpool" });
+      } else {
+        dispatch(setModalStatus({
+          type: ModalTypes.ERROR,
+          message: `Please connect your wallet first to complete the listing.`
+        }))
+      }
+
+    }
+  }, [address])
 
   React.useEffect(() => {
     if (Object.entries(windowPositions).length > 0) {

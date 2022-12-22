@@ -11,6 +11,7 @@ import store from './store.js'
 import { Provider } from 'react-redux'
 
 import { WagmiConfig, createClient } from 'wagmi'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
@@ -39,8 +40,13 @@ const client = createClient({
 })
 
 root.render(
-  <Provider store={store}><WagmiConfig client={client}><App />
-  </WagmiConfig></Provider>
+    <Provider store={store}><WagmiConfig client={client}>
+    <BrowserRouter>
+      <Routes>
+        <Route path={'/'} element={<App />}></Route>
+      </Routes>
+    </BrowserRouter>
+    </WagmiConfig></Provider>
 
 
 );

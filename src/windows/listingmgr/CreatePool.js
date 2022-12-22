@@ -1,6 +1,5 @@
 import { Anchor, Button, TextField, WindowContent, Table, TableHead, TableRow, TableHeadCell, TableBody, TableDataCell, Fieldset, Radio, Tooltip } from "react95";
 import { useSelector, useDispatch } from 'react-redux'
-import { ethers } from "ethers";
 import React from 'react'
 import BigNumber from "bignumber.js";
 import { useNetwork, useAccount, useContractRead, useWaitForTransaction, useContractWrite, erc721ABI } from "wagmi";
@@ -10,6 +9,8 @@ import LSSVMFactory from '../../abis/LSSVMFactory.json'
 import { view } from "../../reducers/imageViewer";
 import { open } from "../../reducers/openWindow";
 import { setIsSudoMirror, setPriceIncrement, setStartPrice } from "../../reducers/pool";
+import {useLocation} from "react-router-dom";
+import axios from "axios";
 
 const factoryAddress = {
   '5': '0x875CC787648E5aaC2b1f01F104b064a8b3e6095B',
@@ -26,17 +27,22 @@ const linearBondingAddress = {
 }
 
 export function CreatePool({ type }) {
+  const [imgUrl, setImgUrl] = React.useState('')
+  const [contractName, setContractName] = React.useState('')
   /**
    * Wagmi Init
    */
   const { chain } = useNetwork()
-  const { address, isConnecting, isDisconnected } = useAccount()
+  const { address } = useAccount()
 
   /**
    * Redux
    */
   const dispatch = useDispatch()
   const selectNFTs = useSelector((state) => state.selectNFT)
+  const search = useLocation().search
+  const collectionAddress = new URLSearchParams(search).get("collectionAddress");
+  const nftId = new URLSearchParams(search).get("nftId");
   /**
    * User states
    */
@@ -47,7 +53,7 @@ export function CreatePool({ type }) {
    * Wagmi Calls
    */
   const { write, data: approveData } = useApproveNFT(selectNFTs[0]?.split('|*|')[0], factoryAddress[chain?.id], true)
-  const { isLoading: isApproveLoading, isSuccess: isApproveSuccess } = useWaitForTransaction({
+  const { isLoading: isApproveLoading, } = useWaitForTransaction({
     hash: approveData?.hash,
   })
   const { data: NFTAllowance } = useContractRead({
@@ -81,8 +87,19 @@ export function CreatePool({ type }) {
     if (isSuccess) dispatch(unselectAll())
   }, [isSuccess])
 
+
+  React.useEffect(() => {
+    if (collectionAddress && nftId) {
+      axios.get(`https://eth-mainnet.g.alchemy.com/nft/v2/${process.env.REACT_APP_ALCHEMY_API_TOKEN}/getNFTMetadata?contractAddress=${collectionAddress}&tokenId=${nftId}&refreshCache=false`).then(v => {
+        setImgUrl(v.data.media[0].gateway)
+        setContractName(v.data.contractMetadata.name)
+        console.log(v.data.media.gateway)
+      })
+    }
+  }, [imgUrl])
+
   return <WindowContent>
-    <div>You are listing {selectNFTs.length} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + selectNFTs[0]?.split('|*|')[0]}>{selectNFTs[0]?.split('|*|')[0]}</Anchor></div>
+    <div>You are listing {selectNFTs.length ? selectNFTs.length : ''} {nftId && '1'} NFT(s) from <Anchor target={'_blank'} href={'https://etherscan.io/address/' + collectionAddress || selectNFTs[0]?.split('|*|')[0]}>{contractName || selectNFTs[0]?.split('|*|')[0]}</Anchor></div>
     <Table>
       <TableHead>
         <TableRow head>
@@ -92,7 +109,7 @@ export function CreatePool({ type }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {selectNFTs.map(sn => <TableRow key={sn} onClick={
+        {selectNFTs && selectNFTs.map(sn => <TableRow key={sn} onClick={
           () => {
             //preview image
             dispatch(view(sn?.split('|*|')[2] || 'https://notjustalabel-prod.s3-accelerate.amazonaws.com/s3fs-public/images/designers/209585/avatar/content_not_found_notjustalabel_127658440.jpg'))
@@ -107,6 +124,21 @@ export function CreatePool({ type }) {
           <TableDataCell style={{ textAlign: 'right' }}>{sn?.split('|*|')[1]}</TableDataCell>
           <TableDataCell>{sn?.split('|*|')[3]}</TableDataCell>
         </TableRow>)}
+        {nftId && <TableRow onClick={
+          () => {
+            //preview image
+            dispatch(view( imgUrl || 'https://notjustalabel-prod.s3-accelerate.amazonaws.com/s3fs-public/images/designers/209585/avatar/content_not_found_notjustalabel_127658440.jpg'))
+            dispatch(open({ action: 'push', window: 'imageviewer' }))
+          }
+        }>
+          <TableDataCell style={{ textAlign: 'center', justifyContent: 'center' }}>
+            <img src={imgUrl} style={{
+              maxHeight: '30px'
+            }} />
+          </TableDataCell>
+          <TableDataCell style={{ textAlign: 'right' }}>{collectionAddress}</TableDataCell>
+          <TableDataCell>{nftId}</TableDataCell>
+        </TableRow>}
       </TableBody>
     </Table>
     <br></br>
@@ -114,7 +146,7 @@ export function CreatePool({ type }) {
       <Tooltip text='Allows you to list in Opensea, X2Y2, etc. at the same time' enterDelay={59} leaveDelay={500}>
         <Radio
           checked={!isSudoMirror}
-          onClick={(e) => dispatch(setIsSudoMirror(false))}
+          onClick={() => dispatch(setIsSudoMirror(false))}
           value={true}
           label='Unlocked'
           name='lmode' />
@@ -123,7 +155,7 @@ export function CreatePool({ type }) {
       <Tooltip text='Dual listing in sudoswap. sudoswap will lockup your NFT.' enterDelay={59} leaveDelay={500}>
         <Radio
           checked={isSudoMirror}
-          onClick={(e) => dispatch(setIsSudoMirror(true))}
+          onClick={() => dispatch(setIsSudoMirror(true))}
           value={false}
           label='Sudo-dual'
           name='lmode' />
